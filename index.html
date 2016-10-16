@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Scala-Pact : A Scala implementation of CDC using the Pact standard">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Scala-Pact</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ITV/scala-pact">View on GitHub</a>
+
+          <h1 id="project_title">Scala-Pact</h1>
+          <h2 id="project_tagline">A Scala implementation of CDC using the Pact standard</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ITV/scala-pact/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ITV/scala-pact/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="scalapact" class="anchor" href="#scalapact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ScalaPact</h1>
+
+<p>A library for generating Consumer Driven Contract files in Scala projects following the PACT standard using <a href="http://www.scalatest.org/">ScalaTest</a>. Includes supporting tools that use Pact files to verify and stub services.</p>
+
+<p>ScalaPact is intended for Scala developers who are looking for a better way to manage the HTTP contracts between their services.</p>
+
+<h2>
+<a id="acknowledgments" class="anchor" href="#acknowledgments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Acknowledgments</h2>
+
+<p>ScalaPact is not an original idea - this project would never have happened without those who came before us:</p>
+
+<ol>
+<li><a href="https://github.com/DiUS">DiUS</a></li>
+<li><a href="https://github.com/pact-foundation">Pact Foundation</a></li>
+<li><a href="http://martinfowler.com/articles/consumerDrivenContracts.html">Thoughtworks / Ian Robinson / Martin Fowler</a></li>
+</ol>
+
+<p>Of particular note is <a href="https://github.com/bethesque">Beth Skurrie</a> - a lot of the design choices and ideas in ScalaPact are direct copies of the ones in her projects. If you're looking for a Ruby implementation, look no further!</p>
+
+<h2>
+<a id="change-log" class="anchor" href="#change-log" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change Log</h2>
+
+<p>Updates and information about changes made between releases can be found in the <a href="https://github.com/ITV/scala-pact/blob/master/CHANGELOG.md">change log</a>. </p>
+
+<h2>
+<a id="setup-guide" class="anchor" href="#setup-guide" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup Guide</h2>
+
+<h3>
+<a id="scalatest-library" class="anchor" href="#scalatest-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ScalaTest Library</h3>
+
+<p>Add the dependency to your <code>build.sbt</code> file like this:</p>
+
+<pre><code>libraryDependencies ++= Seq(
+  "com.itv" %% "scalapact-scalatest" % "1.0.2" % "test"
+)
+</code></pre>
+
+<h3>
+<a id="sbt-plugin" class="anchor" href="#sbt-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SBT Plugin</h3>
+
+<p>Add the plugin to your <code>project/plugins.sbt</code> file like this:</p>
+
+<pre><code>addSbtPlugin("com.itv.plugins" % "scalapact-plugin" % "1.0.2")
+</code></pre>
+
+<h2>
+<a id="basic-usage-examples" class="anchor" href="#basic-usage-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Usage Examples</h2>
+
+<h3>
+<a id="scalatest-pact-forger-api" class="anchor" href="#scalatest-pact-forger-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ScalaTest Pact Forger API</h3>
+
+<p>There is an example test spec that can be found <a href="https://github.com/ITV/scalapact/blob/master/scalapact-scalatest/src/test/scala/com/itv/scalapact/ExampleSpec.scala">here</a>. The hope is that this will be a living example spec.</p>
+
+<h3>
+<a id="sbt-plugin-commands" class="anchor" href="#sbt-plugin-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SBT Plugin Commands</h3>
+
+<h3>
+<a id="pact-test" class="anchor" href="#pact-test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pact-test</h3>
+
+<p>You can run the Pact test cases just by executing <code>sbt test</code> as normal. Because of the way the library has been written, running the tests will generate a series of Pact JSON files, one for each interaction.</p>
+
+<p>The generated Pact files will be output to your target directory under <code>&lt;project root&gt;/target/pacts</code>.</p>
+
+<p>Usually it is desirable to condense the Pact files into one file per consumer / provider pair that contains all of the possible interactions.</p>
+
+<p>Entering <code>sbt pact-test</code> will:</p>
+
+<ol>
+<li>Run clean to remove any lingering pact files</li>
+<li>Run the tests as normal to generate the Pact files</li>
+<li>Squash the Pact files into one per consumer / provider pair</li>
+</ol>
+
+<h3>
+<a id="pact-stubber" class="anchor" href="#pact-stubber" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pact-stubber</h3>
+
+<p>In order to test your service in isolation, you'll need to be able to stub out your service's upstream dependancies. Luckily, you've already defined all the behaviours you expect your provider to exhibit in your CDC Pact tests!</p>
+
+<p>Running <code>sbt pact-stubber</code> will re-run your Pact tests and then use the generated Pact files to create a running stub service. The stub will accept requests and deliver the responses you defined in your test cases giving you predictable, maintainable behaviour.</p>
+
+<p>You can also run the stubber using a combination of the following command line options, below are the defaults:</p>
+
+<p><code>sbt "pact-stubber --host localhost --port 1234 --source target/pacts"</code></p>
+
+<p><em>Note that files in the source folder are recursively loaded.</em></p>
+
+<h4>
+<a id="http-administration" class="anchor" href="#http-administration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>HTTP Administration</h4>
+
+<p>If you prefer, you can use the stubber dynamically by adding and removing pacts using HTTP. All calls must be made with a special header:</p>
+
+<p><code>X-Pact-Admin=true</code></p>
+
+<ul>
+<li>
+<code>GET /interactions</code> returns a list of all currently loaded interactions</li>
+<li>
+<code>POST | PUT /interactions</code> accepts a Pact JSON string and adds all the interactions to the pool it matches against</li>
+<li>
+<code>DELETE /interactions</code> Clears all the current interactions so you can start again</li>
+</ul>
+
+<h3>
+<a id="pact-publish" class="anchor" href="#pact-publish" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pact-publish</h3>
+
+<p>If you plan to use pact testing as part of your CI pipeline you'll probably want to be able to share pact files efficiently between builds. For example a consumer project's build generates a new version of the projects Pact files and they are then used during the providers CI build.</p>
+
+<p>To achieve this we use the Ruby tool called Pact Broker (see below) and the publish command to update the files to it.</p>
+
+<h4>
+<a id="command-line-options" class="anchor" href="#command-line-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command Line Options</h4>
+
+<p>Before we can publish, we have to tell Scala-Pact where it can find a running instance of Pact Broker by adding the following line to either <code>build.sbt</code> or <code>pact.sbt</code>:</p>
+
+<p><code>pactBrokerAddress := "http://my-pact-broker:4321"</code></p>
+
+<p>You can also specify the version you wish to publish under by adding:</p>
+
+<p><code>pactContractVersion := "1.0.0"</code></p>
+
+<p>If you omit this variable or set it to an empty string, the main project version will be the version used to publish against.</p>
+
+<p>You can then use the publish command to generate and upload your pact files to pact broker:</p>
+
+<p><code>sbt pact-publish</code></p>
+
+<p>Note that your Pact files will have the same version number as the normal project version defined in your <code>build.sbt</code> file, because you versioned that breaking API change - right?</p>
+
+<p>By default, Scala-Pact does not allow you to publish pact files from SNAPSHOT versions of your project (but takes into account the pactContractVersion if set). This is because it can confuse pact brokers understanding of the latest contract. If you wish to enable this behaviour, add the following line to your <code>pact.sbt</code> file:</p>
+
+<p><code>allowSnapshotPublish := true</code></p>
+
+<h3>
+<a id="pact-verify" class="anchor" href="#pact-verify" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pact-verify</h3>
+
+<p>Once the consumer has defined the contract as CDC tests and exported them to Pact files, they'll deliver them to their provider. The provider then exercises their own API using the Pact files via a verifier.</p>
+
+<p>The verifier is quite a simple idea: load a Pact file, make all the requests and compare all the responses to the expected ones.</p>
+
+<p>The ScalaPact verifier can be run by entering <code>sbt pact-verify</code>.</p>
+
+<p>The verifier will write out JUnit results to the <code>target/test-reports</code> directory in order to fail builds.</p>
+
+<h4>
+<a id="command-line-options-1" class="anchor" href="#command-line-options-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command Line Options</h4>
+
+<p>You can also run the verifier using a combination of the following command line options. Below are the defaults:</p>
+
+<p><code>sbt "pact-verify --host localhost --protocol http --port 1234 --source pacts"</code></p>
+
+<p><em>Note that files in the source folder are recursively loaded. Specifying a local source folder takes precedence over loading remote files from Pact Broker (see below)</em></p>
+
+<h4>
+<a id="verifying-with-pact-broker-during-a-ci-build" class="anchor" href="#verifying-with-pact-broker-during-a-ci-build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Verifying with Pact Broker during a CI build</h4>
+
+<p>If you're using the publish command to send files to Pact Broker, you'll also want to know how to verify against them in the provider project.</p>
+
+<p>To do this, you need to add the following to either your <code>build.sbt</code> or <code>pact.sbt</code> file:</p>
+
+<pre><code>pactBrokerAddress := "http://my-pact-broker:4321"
+providerName := "The Name Of This Service"
+consumerNames := Seq("Consumer A", "Consumer B")
+</code></pre>
+
+<p>Note: The names are <strong>keys</strong> and all have to line up. Downstream services must publish with the same names that you use to retrieve against.</p>
+
+<p>You then run verify as normal <strong>without</strong> specifying a local folder i.e.:</p>
+
+<p><code>sbt "pact-verify --host localhost --port 1234"</code></p>
+
+<p>This causes the verifier to try and load it's Pacts from Pact Broker ahead of the normal verification process.</p>
+
+<h3>
+<a id="other-considerations" class="anchor" href="#other-considerations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Considerations</h3>
+
+<ol>
+<li>Mock servers can only understand an endpoint being in one state. Mostly that isn't a problem - if you want to create a Pact describing the look up of documents that result in a 200 or a 404 you simply look up two different documents. Where you have something like a <code>/status</code> endpoint that could come back in different states that you care about, you would have to be a bit creative, or not describe that behaviour in a pact contract.</li>
+<li>ScalaTest runs in parallel by default so even clearing the state of the stubber between tests could, and probably would, result in errors if you were using HTTP administration.</li>
+</ol>
+
+<h2>
+<a id="provider-states" class="anchor" href="#provider-states" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Provider States</h2>
+
+<p>ScalaPact currently offers limited support for provider states.</p>
+
+<p>Sometimes, you need to warn your provider that a contract relies on the providing system being in a particular state. For example, your contract describes requesting a document resource via a GET request with the document's id as a query parameter. If you send the Pact contract to your provider, but that document id doesn't exist on their system, then verification will fail through no-ones fault.</p>
+
+<p>To warn the provider about such requirements, we use provider states. In the tests these are simply strings in the <code>given()</code> method as below:</p>
+
+<pre><code>forgePact
+  .between("My Consumer")
+  .and("Their Provider Service")
+  .addInteraction(
+    interaction
+      .description("Fetching a specific ID")
+      .given("Resource with ID 1234 exists")
+      .uponReceiving("/document/lookup?id=1234")
+      .willRespondWith(200, "ID: 1234 Exists")
+  )
+  .runConsumerTest { mockConfig =&gt;
+
+    val result = SimpleClient.doGetRequest(mockConfig.baseUrl, endPoint, Map.empty)
+
+    result.status should equal(200)
+    result.body should equal("ID: 1234 Exists")
+
+  }
+</code></pre>
+
+<p><a href="https://github.com/ITV/scalapact/blob/master/scalapact-scalatest/src/test/scala/com/itv/scalapact/ExampleSpec.scala">Example taken from the ExampleSpec test suite.</a></p>
+
+<p>The <code>given("Resource with ID 1234 exists")</code> string is actually a key that the provider can hook into! It shows up in the Pact contract under the <code>providerState</code> field like this:</p>
+
+<pre><code>{
+  "provider" : {
+    "name" : "Their Provider Service"
+  },
+  "consumer" : {
+    "name" : "My Consumer"
+  },
+  "interactions" : [
+    {
+      "providerState" : "Resource with ID 1234 exists",
+      "description" : "Fetching a specific ID",
+      "request" : {
+        "method" : "GET",
+        "path" : "/provider-state",
+        "query" : "id=1234"
+      },
+      "response" : {
+        "status" : 200,
+        "body" : "ID: 1234 Exists"
+      }
+    }
+  ]
+}
+</code></pre>
+
+<p>On the provider's side, before verification they can opt to take action on any of these keys by adding a <code>pact.sbt</code> file to the root of their Scala project. Here is an example of the contents, again taken from the example suite:</p>
+
+<pre><code>import com.itv.scalapact.plugin.ScalaPactPlugin._
+
+providerStates := Seq(
+  ("Resource with ID 1234 exists", (key: String) =&gt; {
+    println("Injecting key 1234 into the database...")
+    // Do some work to ensure the system under test is
+    // in an appropriate state before verification
+    true
+  })
+)
+</code></pre>
+
+<p><em>Notice it's the same string!</em></p>
+
+<p>Now when the provider runs the verification, the function they wrote will be invoked prior to the relevant interaction being verified.</p>
+
+<p>The providerStates settings object is a <code>Seq[(String, String =&gt; Boolean)]</code> where the first string is the <code>key</code> and the <code>String =&gt; Boolean</code> is a function you describe that simply takes the <code>key</code> and returns whether your code ran successfully or not.</p>
+
+<p>The intention is to create helper objects in the future for running common tasks like executing shell scripts but at the moment the functions are pure Scala and it's up to you how you use them.</p>
+
+<h2>
+<a id="pact-file-distribution-via-pact-broker" class="anchor" href="#pact-file-distribution-via-pact-broker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pact File Distribution via Pact Broker</h2>
+
+<p>During a build process you will need some mechanism for delivering the Pact files your consumer tests generate to your provider ready for verification.</p>
+
+<p>You can do this any way you like, they are just JSON files after all, but we are currently exploring <a href="https://github.com/bethesque/pact_broker">pact-broker</a>. Pact Broker is a Ruby service that allows you to post and look up versioned Pact files.</p>
+
+<p><em>An opinionated note on versioning:</em> Focus on versioning your API's not your Pact files! It can be handy to have versions of Pact files around but you should not be pushing a breaking API changes and communicating them to your provider with versioned Pact files. A breaking API change is a new API version. Theoretically your provider should always be able to ask for the latest Pact files for each API version and have confidence that they are correct.</p>
+
+<h2>
+<a id="pact-tests-vs-integration-tests" class="anchor" href="#pact-tests-vs-integration-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pact Tests vs Integration Tests</h2>
+
+<p>Technically, when you write a Pact test you are creating an integration test, in that:</p>
+
+<ol>
+<li>You write some client code to make the call to your provider;</li>
+<li>You then write a test using a mock that expects a request and gives a response to a real HTTP call;</li>
+<li>You check the results are what you expected.</li>
+</ol>
+
+<p>The <em>purpose</em> of Pact and Integration tests is different though. A Pact test is there to describe the agreed contract between one service and another from the perspective of the consumer. An integration test can describe the relationship but not in a way that you can share with your provider for verification. Additionally Integration tests are good for testing failure cases where Pact tests are not.</p>
+
+<p>Consider these two statements:
+1. Pact tests define <em>what</em> the agreement between a consumer and a provider is
+2. Integration tests check <em>how</em> that agreement is implemented on the consumer side</p>
+
+<p>For instance, you should use Pact tests for describing the agreement:</p>
+
+<ol>
+<li>Requesting data in a specific format from a provider</li>
+<li>Describing content negotiation</li>
+<li>How a provider would respond if it couldn't find the data you wanted</li>
+</ol>
+
+<p>You could then build on that with integration tests:</p>
+
+<ol>
+<li>Checking what happens if the provider simply isn't there</li>
+<li>Network failures</li>
+<li>Timeouts</li>
+<li>Missing end points</li>
+<li>Badly formed responses</li>
+</ol>
+
+<h2>
+<a id="help" class="anchor" href="#help" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help!</h2>
+
+<p>Depending on the kind of help or support you need, there are a few places you can try:</p>
+
+<h3>
+<a id="i-have-a-scala-pact-feature-request-or-bug-to-report" class="anchor" href="#i-have-a-scala-pact-feature-request-or-bug-to-report" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I have a Scala-Pact feature request or bug to report</h3>
+
+<p>Have a look around our <a href="https://github.com/ITV/scala-pact/issues">issues page</a> to see if anyone else has raised a similar request. If not, please raise a new issue and we'll try and help.</p>
+
+<p>If you're a developer and you're feeling brave and generous, feel free to submit a pull request and we'll always do our best to accept it. For more information, please read our <a href="https://github.com/ITV/scala-pact/blob/master/CONTRIBUTING.md">contributing</a> file.</p>
+
+<h3>
+<a id="im-looking-for-general-information-on-pact-or-cdc" class="anchor" href="#im-looking-for-general-information-on-pact-or-cdc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I'm looking for general information on Pact or CDC</h3>
+
+<p>Good places to start are the official <a href="http://www.pact.io">pact.io</a> website or this article on <a href="http://martinfowler.com/articles/consumerDrivenContracts.html">CDC</a>.</p>
+
+<h3>
+<a id="i-have-a-question-about-using-scala-pact-or-pact" class="anchor" href="#i-have-a-question-about-using-scala-pact-or-pact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>I have a question about using Scala-Pact or Pact</h3>
+
+<p>Please direct questions to the official <a href="https://groups.google.com/forum/#!forum/pact-support">Pact support google group</a>. As well as queries, we would love to hear feedback about your experiences with Scala-Pact and Pact generally.</p>
+
+<p>If you're a developer looking to contribute or build a new Pact implementation there's a <a href="https://groups.google.com/forum/#!forum/pact-dev">group</a> for that too!</p>
+
+<h2>
+<a id="pact-specification-compliance-level" class="anchor" href="#pact-specification-compliance-level" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pact Specification Compliance Level</h2>
+
+<p>Currently ScalaPact is not 100% compliant with the official Pact specification. We plan to be but the library is still under active development. The roadmap to Pact compliance will be something like:</p>
+
+<ol>
+<li>Complete testing all tools against the official specification test cases. The only area of the specification that is believed to be incomplete is around the JSON body matching rules.</li>
+<li>Consolidate our processes with the official implementor's guide.</li>
+</ol>
+
+<p>Our intention is to eventually meet version 2 of the pact specification.</p>
+
+<h2>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h2>
+
+<p><a href="https://github.com/realestate-com-au/pact">Pact</a> is an implementation of CDC testing (<a href="http://martinfowler.com/articles/consumerDrivenContracts.html">Consumer Driven Contract testing</a>). There are other implementations like <a href="https://github.com/thoughtworks/pacto">Pacto</a> and they vary slightly in how they interpret the testing process.</p>
+
+<p>Following the Pact interpretation of CDC, the process goes something like this:</p>
+
+<ol>
+<li>Write a piece of client code in a project that consumes a service and knows the details of how to connect to that provider.</li>
+<li>Write a real integration test for that client code that hits a mock, but also as a side effect emits a JSON file describing the relationship. This JSON file is your Pact contract file. Note that in Pact (not Pacto) it is owned by the consumer.</li>
+<li>During development of the consumer, the Pact file can be used to run a lightweight stub service that mimics the expected behavior of the provider. <em>Note: The provider need not even exist yet and the Pact files can form part of the providers design specification.</em>
+</li>
+<li>Give the generated Pact file to the team that build the provider, an upstream service you depend on. This Pact file tells the provider team both how you expect their API to behave and <em>which parts of their API are delivering value to you the consumer</em>.</li>
+<li>The provider then verifies the Pact by running the requests and responses described in the Pact file against their system.</li>
+</ol>
+
+<p>Most of the original tools for CDC testing have come out of the Ruby community but a full list of officially supported languages can be found on the <a href="http://docs.pact.io/">pact.io</a> website.</p>
+
+<p>The crucial point to appreciate is that the client code is written in your native language using your normal test framework, and therefore, your Pact integrations tests must also be written in your native language too!</p>
+
+<p>The other uses of the Pact files, verification and stubbing are largely standalone processes that are language agnostic and so it's quite feasible to use the Ruby implementations if you prefer.</p>
+
+<p>There is another implementation of the Pact integration test suite that is compatible with Scala and <a href="https://etorreborre.github.io/specs2/">Specs2</a> called <a href="https://github.com/DiUS/pact-jvm">Pact-JVM</a>. Pact-JVM also supports other JVM languages like Java and Groovy. Scala-Pact has the same aims and adheres to the same standards but attempts to deliver a more Scala specific experience.</p>
+
+<h2>
+<a id="scala-project-library-dependencies" class="anchor" href="#scala-project-library-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scala Project Library Dependencies</h2>
+
+<p>The Pact integration test library itself depends on a range of Scala/Java libraries.</p>
+
+<h3>
+<a id="http4s" class="anchor" href="#http4s" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Http4s</h3>
+
+<p><a href="http://http4s.org/">Http4s</a> powers ScalaPact's stubber.</p>
+
+<h3>
+<a id="argonaut" class="anchor" href="#argonaut" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Argonaut</h3>
+
+<p><a href="http://argonaut.io/">Argonaut</a> is used to read and write the JSON Pact files.</p>
+
+<h3>
+<a id="wiremock" class="anchor" href="#wiremock" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WireMock</h3>
+
+<p><a href="http://wiremock.org/">WireMock</a> is used to supply the mocks that ScalaPact runs the integration tests against.</p>
+
+<h3>
+<a id="scalatest" class="anchor" href="#scalatest" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ScalaTest</h3>
+
+<p><a href="http://www.scalatest.org/">ScalaTest</a> is both our test suite of choice and the target for the ScalaPact implementation.</p>
+
+<h3>
+<a id="scalaj-http" class="anchor" href="#scalaj-http" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scalaj-Http</h3>
+
+<p><a href="https://github.com/scalaj/scalaj-http">Scalaj-Http</a> is used for quick synchronous HTTP calls.</p>
+
+<h3>
+<a id="scalaz" class="anchor" href="#scalaz" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scalaz</h3>
+
+<p><a href="https://github.com/scalaz/scalaz">Scalaz</a> is the glue that holds it all together.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Scala-Pact maintained by <a href="https://github.com/ITV">ITV</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
