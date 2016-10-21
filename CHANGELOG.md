@@ -2,10 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## Next release
-- Removed dependency on WireMock ([davesmith00000])
 - Full Pact Specification 2 compliance ([davesmith00000])
 - Body matching ([davesmith00000])
 - Strict mode ([davesmith00000])
+- Removed dependency on WireMock ([davesmith00000])
+- Improved mock config object for consumer tests ([davesmith00000])
 
 ## 1.0.2 - 2016-10-04
 - Remove logging implementation dependencies ([agustafson])
