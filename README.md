@@ -10,10 +10,8 @@ ScalaPact is not an original idea - this project would never have happened witho
 1. [Pact Foundation](https://github.com/pact-foundation)
 1. [Thoughtworks / Ian Robinson / Martin Fowler](http://martinfowler.com/articles/consumerDrivenContracts.html)
 
-Of particular note is [Beth Skurrie](https://github.com/bethesque) - a lot of the design choices and ideas in ScalaPact are direct copies of the ones in her projects. If you're looking for a Ruby implementation, look no further!
-
 ## Change Log
-Updates and information about changes made between releases can be found in the [change log](https://github.com/ITV/scala-pact/blob/master/CHANGELOG.md). 
+Updates and information about changes made between releases can be found in the [change log](https://github.com/ITV/scala-pact/blob/master/CHANGELOG.md).
 
 ## Setup Guide
 
@@ -303,9 +301,6 @@ The Pact integration test library itself depends on a range of Scala/Java librar
 
 ### Argonaut
 [Argonaut](http://argonaut.io/) is used to read and write the JSON Pact files.
-
-### WireMock
-[WireMock](http://wiremock.org/) is used to supply the mocks that ScalaPact runs the integration tests against.
 
 ### ScalaTest
 [ScalaTest](http://www.scalatest.org/) is both our test suite of choice and the target for the ScalaPact implementation.
