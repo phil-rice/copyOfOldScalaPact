@@ -31,6 +31,9 @@ Add the plugin to your `project/plugins.sbt` file like this:
 addSbtPlugin("com.itv.plugins" % "scalapact-plugin" % "1.0.2")
 ```
 
+## Example projects
+Fully working, albeit simple, example projects have been setup in the [example folder](https://github.com/ITV/scala-pact/tree/master/example).
+
 ## Basic Usage Examples
 ### ScalaTest Pact Forger API
 There is an example test spec that can be found [here](https://github.com/ITV/scalapact/blob/master/scalapact-scalatest/src/test/scala/com/itv/scalapact/ExampleSpec.scala). The hope is that this will be a living example spec.
@@ -131,10 +134,68 @@ You then run verify as normal **without** specifying a local folder i.e.:
 
 This causes the verifier to try and load it's Pacts from Pact Broker ahead of the normal verification process.
 
-### Other Considerations
+### Other considerations
 
 1. Mock servers can only understand an endpoint being in one state. Mostly that isn't a problem - if you want to create a Pact describing the look up of documents that result in a 200 or a 404 you simply look up two different documents. Where you have something like a `/status` endpoint that could come back in different states that you care about, you would have to be a bit creative, or not describe that behaviour in a pact contract.
 1. ScalaTest runs in parallel by default so even clearing the state of the stubber between tests could, and probably would, result in errors if you were using HTTP administration.
+
+## Strict mode
+Scala-Pact was designed on a different set of choices than the original Pact implementations. The biggest but also least obvious of which is that Scala-Pact is subtly more forgiving by default in terms of how it matches.
+
+For example, although the JSON specification states that arrays are ordered, you generally can't rely on that and your code should not be making that assumption. As such Scala-Pact considers the following a match:
+
+`["red", "blue"] == ["blue", "red"]`
+
+Whereas the original Pact implementations consider that a mismatch.
+
+To take body matching as an example, Scala-Pact's matching process states that as long as the expected document exists within the actual document, they are a match. This is very powerful because it allows you to only describe the parts of the response object you care about (**without using body matching rules!**). For example these two nonsense JSON blobs are a match:
+
+Expected (the part of the contract we care about) data and structure:
+```
+{
+  "id": "abc123",
+  "metadata": {
+    "name": "Bob"
+  },
+  [
+    {
+      "favouriteColour": "red"
+    }
+  ]
+}
+```
+
+Actual:
+```
+{
+  "metadata": {
+    "likesSports": true,
+    "name": "Bob",
+    "employeeNumber": 15666884
+  },
+  "id": "abc123",
+  [
+    {
+      "favouriteColour": "green",
+      "takesSugar": true
+    },
+    {
+      "favouriteColour": "red",
+      "likesFishing": null
+    }
+  ]
+}
+```
+
+Notice that despite the extra data, the expected does fit perfectly inside the actual.
+
+The original Pact matching process does not consider these a match. For anyone wishing to replicate that behaviour (and so we can call this library compliant!), a new strict mode has been introduced.
+
+Any of the usual commands will now take a `--strict true` or `--strict false` parameter that defaults to false.
+
+To use strict testing in the test frameworks you can use the `forgeStrictPact` initialiser in the consumer tests or do `.runStrictValidationTest(...)` in the verifier tests.
+
+Please note that there is no such thing as a strict or non-strict Pact Contract file, the difference is entirely in the interpretation of the contract.
 
 ## Provider States
 ScalaPact currently offers limited support for provider states.
@@ -267,12 +328,7 @@ Please direct questions to the official [Pact support google group](https://grou
 If you're a developer looking to contribute or build a new Pact implementation there's a [group](https://groups.google.com/forum/#!forum/pact-dev) for that too!
 
 ## Pact Specification Compliance Level
-Currently ScalaPact is not 100% compliant with the official Pact specification. We plan to be but the library is still under active development. The roadmap to Pact compliance will be something like:
-
-1. Complete testing all tools against the official specification test cases. The only area of the specification that is believed to be incomplete is around the JSON body matching rules.
-1. Consolidate our processes with the official implementor's guide.
-
-Our intention is to eventually meet version 2 of the pact specification.
+Scala-Pact is now fully compliant with version 2 of the official pact specification.
 
 ## Motivation
 [Pact](https://github.com/realestate-com-au/pact) is an implementation of CDC testing ([Consumer Driven Contract testing](http://martinfowler.com/articles/consumerDrivenContracts.html)). There are other implementations like [Pacto](https://github.com/thoughtworks/pacto) and they vary slightly in how they interpret the testing process.
