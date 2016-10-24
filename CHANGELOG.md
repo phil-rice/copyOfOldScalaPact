@@ -2,10 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## Next release
-- Full Pact Specification 2 compliance ([davesmith00000])
+- Full Pact specification version 2 compliance ([davesmith00000])
 - Body matching rules for JSON and XML ([davesmith00000])
 - Provider verification test framework ([davesmith00000])
-- Strict mode to conform with Pact Specification V2 matching requirements ([davesmith00000])
+- Strict mode to optionally conform with Pact Specification V2 matching requirements ([davesmith00000])
 - Removed dependency on WireMock ([davesmith00000])
 - Improved mock config object for consumer tests ([davesmith00000])
 
