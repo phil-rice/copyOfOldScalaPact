@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Scala-Pact Example Projects · Scala-Pact Documentation</title>
+<title>How to contribute · Scala-Pact Documentation</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='website'/>
@@ -47,11 +47,11 @@
     <li><a href="philosophy/motivation.html">Motivation</a></li>
     <li><a href="philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
   </ul></li>
-  <li><a href="example.html" class="active">Scala-Pact Example Projects</a></li>
+  <li><a href="example.html">Scala-Pact Example Projects</a></li>
   <li><a href="help.html">Get help</a></li>
   <li><a href="project-deps.html">Library dependencies</a></li>
   <li><a href="change-log.html">Change log</a></li>
-  <li><a href="contributing.html">How to contribute</a></li>
+  <li><a href="contributing.html" class="active">How to contribute</a></li>
 </ul>
 </div>
 
@@ -101,11 +101,11 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
     <li><a href="philosophy/motivation.html">Motivation</a></li>
     <li><a href="philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
   </ul></li>
-  <li><a href="example.html" class="active">Scala-Pact Example Projects</a></li>
+  <li><a href="example.html">Scala-Pact Example Projects</a></li>
   <li><a href="help.html">Get help</a></li>
   <li><a href="project-deps.html">Library dependencies</a></li>
   <li><a href="change-log.html">Change log</a></li>
-  <li><a href="contributing.html">How to contribute</a></li>
+  <li><a href="contributing.html" class="active">How to contribute</a></li>
 </ul>
 </div>
 
@@ -120,7 +120,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="nav-breadcrumbs">
 <ul>
   <li><a href="index.html">Scala-Pact Documentation</a></li>
-  <li>Scala-Pact Example Projects</li>
+  <li>How to contribute</li>
 </ul>
 </div>
 </div>
@@ -128,48 +128,55 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#scala-pact-example-projects" name="scala-pact-example-projects" class="anchor"><span class="anchor-link"></span></a>Scala-Pact Example Projects</h1>
-<p>This is a simple demonstration of Pact CDC testing in action. There are two SBT projects, one for the consumer and another for the provider. Both contain the bare minimum to demonstrate how pact testing works.</p>
-<p>The examples don&rsquo;t go into great depth, for more information you should refer to the main <a href="https://github.com/ITV/scala-pact/blob/master/README.md">README</a> file.</p>
-<p>There is an assumption that you will be running this on linux or mac and have Scala + SBT setup.</p>
-<h2><a href="#consumer" name="consumer" class="anchor"><span class="anchor-link"></span></a>Consumer</h2>
-<p>The consumer project owns and generates the Pact contract file.</p>
-<p>The Pact contract file is the result of an <a href="https://github.com/ITV/scala-pact/blob/example-projects/example/consumer/src/test/scala/com/example/consumer/ProviderClientSpec.scala">integration test</a> that tests a <a href="https://github.com/ITV/scala-pact/blob/example-projects/example/consumer/src/main/scala/com/example/consumer/ProviderClient.scala">real, albeit crude piece of client code</a> against a mock.</p>
-<p>To run the pact-tests, do the following (assuming you&rsquo;ve checked out the project and are in the example directory):</p>
-<pre class="prettyprint"><code>cd consumer
-sbt pact-test
+<h1><a href="#how-to-contribute" name="how-to-contribute" class="anchor"><span class="anchor-link"></span></a>How to contribute</h1>
+<p>All efforts to contribute to this project are welcome and encouraged. Scala-Pact can only be better with more eyes looking for problems and more minds trying to solve them.</p>
+<p>If you would like to contribute, there are principally two ways you can help.</p>
+<h3><a href="#raising-issues" name="raising-issues" class="anchor"><span class="anchor-link"></span></a>Raising issues</h3>
+<p>If we don&rsquo;t know there is a problem, we can&rsquo;t help fix it.</p>
+<p>Please feel free to raise issues if you can&rsquo;t get something to work, find a bug, or you have any ideas for improvements.</p>
+<p>Try and be as specific as possible, ideally you should include steps to re-produce your issue if it&rsquo;s a bug, or some sort of rationale for new features.</p>
+<h3><a href="#code" name="code" class="anchor"><span class="anchor-link"></span></a>Code</h3>
+<p>We will always try to accept code submissions. If you&rsquo;d like to discuss a change before you make it, please raise an issue and describe the work you&rsquo;re planning to do.</p>
+<p>If you would like to improve the project by contributing code, please fork the repo, make your change and submit a pull request.</p>
+<h4><a href="#when-your-pr-is-accepted-please-rebase-rather-than-merge" name="when-your-pr-is-accepted-please-rebase-rather-than-merge" class="anchor"><span class="anchor-link"></span></a>When your PR is accepted, please rebase rather than merge</h4>
+<p>Special note to people who have direct access to the main project repo. Please do not use github&rsquo;s magic merge button on your pull requests. Please rebase your work, for example (assuming you&rsquo;re on your branch):</p>
+<pre class="prettyprint"><code>git fetch -p
+git pull --rebase origin master
+git push origin HEAD:master
 </code></pre>
-<p>You should now be able to see a file in the <code>consumer/target/pacts/</code> directory called <code>Consumer_Provider.json</code>. This is your Pact file that describes the behaviour you expect fro the Provider service.</p>
-<h2><a href="#stubbing" name="stubbing" class="anchor"><span class="anchor-link"></span></a>Stubbing</h2>
-<p>If you wanted to, you could now run a stub version of the Provider service, again from the <code>consumer</code> directory, by simply entering <code>sbt pact-stubber</code> on the command line and the service would start on port <code>1234</code>.</p>
-<p>Try it, you should be able to go hit <a href="http://localhost:1234/results">the results end point in your browser</a>.</p>
-<p>You could also use the <a href="https://github.com/ITV/scala-pact/tree/master/scalapact-standalone-stubber">standalone stubber</a>. If you plan to use this in a CI pipeline you should consider assembling it into a JAR by running <code>sbt assembly</code>.</p>
-<h2><a href="#delivering-the-pact-file" name="delivering-the-pact-file" class="anchor"><span class="anchor-link"></span></a>Delivering the pact file</h2>
-<p>In a real scenario, you would probably use Pact Broker to send the newly created Pact contract to the Provider ahead of verification.</p>
-<p>In our demo, we&rsquo;re going to skip that on the assumption that you don&rsquo;t have a <a href="https://github.com/bethesque/pact_broker">Pact Broker</a> handy, but full details of how to integrate with <a href="https://github.com/bethesque/pact_broker">Pact Broker</a> can be found in the main <a href="https://github.com/ITV/scala-pact/blob/master/README.md">README</a> file.</p>
-<p>Instead we&rsquo;re going to use a script to do the delivery. Navigate back to the main example directory on the terminal and run:</p>
-<pre class="prettyprint"><code>bash deliver.sh
-</code></pre>
-<p>This script simply copies the <code>Consumer_Provider.json</code> file into the <code>provider/delivered_pacts</code> directory.</p>
-<h2><a href="#provider" name="provider" class="anchor"><span class="anchor-link"></span></a>Provider</h2>
-<p>Now to see if it works!</p>
-<p>You will need two terminal windows, both of which are open in the <code>provider</code> directory.</p>
-<p>In the first terminal window, run <code>sbt run</code> to start the service.</p>
-<p>In the second terminal window, run:</p>
-<pre class="prettyprint"><code>sbt &quot;pact-verify --source delivered_pacts/ --host localhost --port 8080&quot;
-</code></pre>
-<p><em>Note: the <code>--source delivered_pacts/</code> bit that tells the verifier you want to use local pact files in the directory specified.</em></p>
-<p>This will replay the request(s) in the Pact contract file against the service and check that the responses match.</p>
-<h3><a href="#additionally" name="additionally" class="anchor"><span class="anchor-link"></span></a>Additionally&hellip;</h3>
-<p>This example setup contains one extra thing, which is an example of how to use provider states. The test suite declares a <code>given(&quot;...&quot;)</code> requirement and it is fulfilled during verification by the function in the <code>pact.sbt</code> at the root of the provider project.</p>
-<h2><a href="#things-to-note" name="things-to-note" class="anchor"><span class="anchor-link"></span></a>Things to note</h2>
+<p>This should help us keep a linear history.</p>
+<h4><a href="#testing-scala-pact" name="testing-scala-pact" class="anchor"><span class="anchor-link"></span></a>Testing Scala-Pact</h4>
+<p>Before submitting your pull request, you should do your best to check it all works!</p>
+<p>The process has been codified into the <code>local-build-test.sh</code> shell script in the project root. This script builds, tests, and publishes everything to your local .ivy2 repo. Run from the project root directory using (takes about 5 minutes to complete): <code>bash scripts/local-build-test.sh</code></p>
+<p>Here is the current testing procedure (in order):</p>
+<h5><a href="#all-projects" name="all-projects" class="anchor"><span class="anchor-link"></span></a>All Projects</h5>
 <ol>
-  <li>The consumer and provider scala projects both use different case classes to represent the data. This does not matter, only the Pact file matters.</li>
-  <li>The consumer and provider scala projects both use different json libraries to read/write the json. This does not matter either, the contract is in no way less solid for the difference in library or marshalling logic.</li>
+  <li>Make sure all the projects have a new SNAPSHOT version, that it is the same everywhere, and that they all use each other&rsquo;s new version i.e. Bump the core, bump the plugin and update the plugin to use the new core, bump the test project and update it to use the new core and the new plugin version.</li>
+  <li>Make sure you don&rsquo;t have that version in your <code>~/.ivy2/local</code> or <code>~/.ivy2/cache</code> folders.</li>
 </ol>
-<div class="nav-next">
-<p><strong>Next:</strong> <a href="help.html">Get help</a></p>
-</div>
+<h5><a href="#core-project" name="core-project" class="anchor"><span class="anchor-link"></span></a>Core Project</h5>
+<ol>
+  <li>Run <code>sbt clean update compile</code></li>
+  <li>Run <code>sbt test</code></li>
+  <li>Run <code>sbt &quot;+ publish-local&quot;</code> to cross compile and publish to your local cache.</li>
+</ol>
+<h5><a href="#plugin-project" name="plugin-project" class="anchor"><span class="anchor-link"></span></a>Plugin Project</h5>
+<ol>
+  <li>Run <code>sbt clean update compile</code></li>
+  <li>Run <code>sbt test</code></li>
+  <li>Run <code>sbt publish-local</code> to publish to your local cache.</li>
+</ol>
+<h5><a href="#test-project" name="test-project" class="anchor"><span class="anchor-link"></span></a>Test Project</h5>
+<ol>
+  <li>Run <code>sbt clean update compile</code></li>
+  <li>Run <code>sbt test</code></li>
+  <li>Run <code>sbt pact-test</code></li>
+  <li>Run <code>sbt pact-stubber</code></li>
+  <li>In a new terminal (again from the test project directory), run <code>sbt pact-verify --source target/pacts</code></li>
+</ol>
+<h5><a href="#standalone-stubber" name="standalone-stubber" class="anchor"><span class="anchor-link"></span></a>Standalone stubber</h5>
+<p>No testing required at present.</p>
+<p><strong>If everything is green, you&rsquo;re ready to submit your pull request!</strong></p>
 </div>
 <div class="large-3 show-for-large column" data-sticky-container>
 <nav class="sidebar sticky" data-sticky data-anchor="docs" data-sticky-on="large">
@@ -177,13 +184,10 @@ sbt pact-test
 <div class="nav-title">On this page:</div>
 <div class="nav-toc">
 <ul>
-  <li><a href="example.html#scala-pact-example-projects">Scala-Pact Example Projects</a>
+  <li><a href="contributing.html#how-to-contribute">How to contribute</a>
   <ul>
-    <li><a href="example.html#consumer">Consumer</a></li>
-    <li><a href="example.html#stubbing">Stubbing</a></li>
-    <li><a href="example.html#delivering-the-pact-file">Delivering the pact file</a></li>
-    <li><a href="example.html#provider">Provider</a></li>
-    <li><a href="example.html#things-to-note">Things to note</a></li>
+    <li><a href="contributing.html#raising-issues">Raising issues</a></li>
+    <li><a href="contributing.html#code">Code</a></li>
   </ul></li>
 </ul>
 </div>
