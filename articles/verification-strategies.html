@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Provider states · Scala-Pact</title>
+<title>Verification strategies · Scala-Pact</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='website'/>
@@ -42,7 +42,7 @@
   </ul></li>
   <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
-    <li><a href="../advanced/provider-states.html" class="active">Provider states</a></li>
+    <li><a href="../advanced/provider-states.html">Provider states</a></li>
     <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
     <li><a href="../advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
@@ -50,7 +50,7 @@
   <ul>
     <li><a href="../articles/motivation.html">Motivation</a></li>
     <li><a href="../articles/pact-vs-integration.html">Pact vs Integration</a></li>
-    <li><a href="../articles/verification-strategies.html">Verification strategies</a></li>
+    <li><a href="../articles/verification-strategies.html" class="active">Verification strategies</a></li>
   </ul></li>
   <li><a href="../examples/index.html">Example projects</a>
   <ul>
@@ -105,7 +105,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   </ul></li>
   <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
-    <li><a href="../advanced/provider-states.html" class="active">Provider states</a></li>
+    <li><a href="../advanced/provider-states.html">Provider states</a></li>
     <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
     <li><a href="../advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
@@ -113,7 +113,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   <ul>
     <li><a href="../articles/motivation.html">Motivation</a></li>
     <li><a href="../articles/pact-vs-integration.html">Pact vs Integration</a></li>
-    <li><a href="../articles/verification-strategies.html">Verification strategies</a></li>
+    <li><a href="../articles/verification-strategies.html" class="active">Verification strategies</a></li>
   </ul></li>
   <li><a href="../examples/index.html">Example projects</a>
   <ul>
@@ -138,8 +138,8 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="nav-breadcrumbs">
 <ul>
   <li><a href="../index.html">Scala-Pact</a></li>
-  <li><a href="../advanced/index.html">Advanced usage</a></li>
-  <li>Provider states</li>
+  <li><a href="../articles/index.html">Articles</a></li>
+  <li>Verification strategies</li>
 </ul>
 </div>
 </div>
@@ -147,76 +147,44 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#provider-states" name="provider-states" class="anchor"><span class="anchor-link"></span></a>Provider states</h1>
-<p>Scala-Pact currently offers limited support for provider states.</p>
-<p>Sometimes, you need to warn your provider that a contract relies on the providing system being in a particular state. For example, your contract describes requesting a document resource via a GET request with the document&rsquo;s id as a query parameter. If you send the Pact contract to your provider, but that document id doesn&rsquo;t exist on their system, then verification will fail through no-ones fault.</p>
-<p>To warn the provider about such requirements, we use provider states. In the tests these are simply strings in the <code>given()</code> method as below:</p>
-<pre class="prettyprint"><code>forgePact
-  .between(&quot;My Consumer&quot;)
-  .and(&quot;Their Provider Service&quot;)
-  .addInteraction(
-    interaction
-      .description(&quot;Fetching a specific ID&quot;)
-      .given(&quot;Resource with ID 1234 exists&quot;)
-      .uponReceiving(&quot;/document/lookup?id=1234&quot;)
-      .willRespondWith(200, &quot;ID: 1234 Exists&quot;)
-  )
-  .runConsumerTest { mockConfig =&gt;
-
-    val result = SimpleClient.doGetRequest(mockConfig.baseUrl, endPoint, Map.empty)
-
-    result.status should equal(200)
-    result.body should equal(&quot;ID: 1234 Exists&quot;)
-
-  }
-</code></pre>
-<p><a href="https://github.com/ITV/scalapact/blob/master/scalapact-scalatest/src/test/scala/com/itv/scalapact/ExampleSpec.scala">Example taken from the ExampleSpec test suite.</a></p>
-<p>The <code>given(&quot;Resource with ID 1234 exists&quot;)</code> string is actually a key that the provider can hook into! It shows up in the Pact contract under the <code>providerState</code> field like this:</p>
-<pre class="prettyprint"><code>{
-  &quot;provider&quot; : {
-    &quot;name&quot; : &quot;Their Provider Service&quot;
-  },
-  &quot;consumer&quot; : {
-    &quot;name&quot; : &quot;My Consumer&quot;
-  },
-  &quot;interactions&quot; : [
-    {
-      &quot;providerState&quot; : &quot;Resource with ID 1234 exists&quot;,
-      &quot;description&quot; : &quot;Fetching a specific ID&quot;,
-      &quot;request&quot; : {
-        &quot;method&quot; : &quot;GET&quot;,
-        &quot;path&quot; : &quot;/provider-state&quot;,
-        &quot;query&quot; : &quot;id=1234&quot;
-      },
-      &quot;response&quot; : {
-        &quot;status&quot; : 200,
-        &quot;body&quot; : &quot;ID: 1234 Exists&quot;
-      }
-    }
-  ]
-}
-</code></pre>
-<p>On the provider&rsquo;s side, before verification they can opt to take action on any of these keys by adding a <code>pact.sbt</code> file to the root of their Scala project. Here is an example of the contents, again taken from the example suite:</p>
-<pre class="prettyprint"><code>import com.itv.scalapact.plugin.ScalaPactPlugin._
-
-providerStates := Seq(
-  (&quot;Resource with ID 1234 exists&quot;, (key: String) =&gt; {
-    println(&quot;Injecting key 1234 into the database...&quot;)
-    // Do some work to ensure the system under test is
-    // in an appropriate state before verification
-    true
-  })
-)
-</code></pre>
-<p><em>Notice it&rsquo;s the same string!</em></p>
-<p>Now when the provider runs the verification, the function they wrote will be invoked prior to the relevant interaction being verified.</p>
-<p>The providerStates settings object is a <code>Seq[(String, String =&gt; Boolean)]</code> where the first string is the <code>key</code> and the <code>String =&gt; Boolean</code> is a function you describe that simply takes the <code>key</code> and returns whether your code ran successfully or not.</p>
-<p>The intention is to create helper objects in the future for running common tasks like executing shell scripts but at the moment the functions are pure Scala and it&rsquo;s up to you how you use them.</p>
+<h1><a href="#verification-strategies" name="verification-strategies" class="anchor"><span class="anchor-link"></span></a>Verification strategies</h1>
+<p>Verification is the process of checking that a Pact contract, generated by a consumer, is being adhered to by the provider service.</p>
+<p>There are two approaches to doing this: 1. External: Stubbing and injecting data into a running service 2. Internal: Running contract verification as part of test suite.</p>
+<p>They are being referred to here as internal and external simply because one operates from within your code base and the other has no access.</p>
+<p>Both are equally valid and both require thought about which strategy will work best in your scenario and effort to setup.</p>
+<p>As a rough guide, I would be looking at external verification for services that themselves hold no data or have no data store, and internal for those that do. It isn&rsquo;t black and white though, if it&rsquo;s a microservice with a simple datastore it may well be easier to use external testing.</p>
+<h2><a href="#external-verification" name="external-verification" class="anchor"><span class="anchor-link"></span></a>External verification</h2>
+<p>This is blackbox testing. The aim is to run your service in an isolated state, fire requests at it and check the responses.</p>
+<p>How do you isolate a service that has databases and upstream services?</p>
+<p>Upstream services are the easy bit, they are your providers and so you wrote Pact tests for them didn&rsquo;t you? Therefore all you need to do is run the pact stubber and it will pretend to be your upstream services for you.</p>
+<p>Data stores are more challenging. The idea here is to set up a locally running version of the datastore with know preloaded data.</p>
+<p>The local datastore could be a true local instance, it would be an in-memory protocol-equivalent store that your service knowns how to run on startup, it could also be a something like a docker image.</p>
+<p>Data injection is done using <a href="../advanced/provider-states.html">provider states</a>. A provider state is simply a hook with a string key that gives you an opportunity to set up the state of the provider before the verification is done. In Scala-Pact, provider states are setup in your SBT files and hence you can use any scala libraries or constructs you like or even break out back to a shell script.</p>
+<p>Once your service is isolated, you then run the <a href="../basics/sbt-commands-and-tasks.html">verifier</a> against your service.</p>
+<h2><a href="#internal-verification" name="internal-verification" class="anchor"><span class="anchor-link"></span></a>Internal verification</h2>
+<p>Internal verification is done through a test suite. Really all that happens here is that the normal verifier is invoked from inside a test case when you are ready, but this allows some different setup opportunities.</p>
+<p>The first thing to note is that you have full access to your codebase so now you can use your fancy functions for doing data base setup for instance.</p>
+<p>A better strategy though maybe, in this type of verification, to view this as the inverse of the consumer tests. The consumer tests only test the small piece of code that actually handles connecting to the provider. We can do the same here, isolate the part of the provider responsible for adhereing to the contract i.e. the routing and marshalling code.</p>
+<p>Please see the <a href="../examples/index.html">example projects</a> for working demonstrations of both approaches.</p>
 <div class="nav-next">
-<p><strong>Next:</strong> <a href="../advanced/strict-mode.html">Strict mode</a></p>
+<p><strong>Next:</strong> <a href="../examples/index.html">Example projects</a></p>
 </div>
 </div>
 <div class="large-3 show-for-large column" data-sticky-container>
+<nav class="sidebar sticky" data-sticky data-anchor="docs" data-sticky-on="large">
+<div class="page-nav">
+<div class="nav-title">On this page:</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="../articles/verification-strategies.html#verification-strategies">Verification strategies</a>
+  <ul>
+    <li><a href="../articles/verification-strategies.html#external-verification">External verification</a></li>
+    <li><a href="../articles/verification-strategies.html#internal-verification">Internal verification</a></li>
+  </ul></li>
+</ul>
+</div>
+</div>
+</nav>
 </div>
 </div>
 

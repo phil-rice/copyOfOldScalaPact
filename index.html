@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Scala-Pact Documentation</title>
+<title>Scala-Pact</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='website'/>
@@ -26,30 +26,39 @@
 <nav class="off-canvas-nav">
 <div class="nav-home">
 <a href="index.html" class="active">
-<span class="home-icon">⌂</span>Scala-Pact Documentation
+<span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-1.0.2
+2.0.0
 </div>
 </div>
 <div class="nav-toc">
 <ul>
   <li><a href="setup.html">Setup guide</a></li>
-  <li><a href="basic-usage.html">Basic usage guide</a></li>
+  <li><a href="basics/index.html">Basic usage</a>
+  <ul>
+    <li><a href="basics/sbt-commands-and-tasks.html">SBT Commands</a></li>
+    <li><a href="basics/test-frameworks.html">Test frameworks</a></li>
+  </ul></li>
   <li><a href="advanced/index.html">Advanced usage</a>
   <ul>
     <li><a href="advanced/provider-states.html">Provider states</a></li>
     <li><a href="advanced/strict-mode.html">Strict mode</a></li>
-    <li><a href="advanced/pact-broker.html">Contract sharing with Pact Broker</a></li>
+    <li><a href="advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
-  <li><a href="philosophy/index.html">Concepts and background</a>
+  <li><a href="articles/index.html">Articles</a>
   <ul>
-    <li><a href="philosophy/motivation.html">Motivation</a></li>
-    <li><a href="philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
+    <li><a href="articles/motivation.html">Motivation</a></li>
+    <li><a href="articles/pact-vs-integration.html">Pact vs Integration</a></li>
+    <li><a href="articles/verification-strategies.html">Verification strategies</a></li>
   </ul></li>
-  <li><a href="example.html">Scala-Pact Example Projects</a></li>
+  <li><a href="examples/index.html">Example projects</a>
+  <ul>
+    <li><a href="examples/consumer.html">The Consumer</a></li>
+    <li><a href="examples/provider.html">The Provider</a></li>
+  </ul></li>
   <li><a href="help.html">Get help</a></li>
-  <li><a href="project-deps.html">Library dependencies</a></li>
+  <li><a href="project-deps.html">Dependencies</a></li>
   <li><a href="change-log.html">Change log</a></li>
   <li><a href="contributing.html">How to contribute</a></li>
 </ul>
@@ -66,7 +75,7 @@
 H3.6C3.048,13,3,13.447,3,14c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,13.447,16.952,13,16.4,13z M3.6,7H16.4
 C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.048,7,3.6,7z"/></svg>
 </a>
-<div class="title"><a href="index.html" class="active">Scala-Pact Documentation</a></div>
+<div class="title"><a href="index.html" class="active">Scala-Pact</a></div>
 
 <!--
 <a href="https://www.example.com" class="logo show-for-medium">logo</a>
@@ -80,30 +89,39 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <nav class="site-nav">
 <div class="nav-home">
 <a href="index.html" class="active">
-<span class="home-icon">⌂</span>Scala-Pact Documentation
+<span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-1.0.2
+2.0.0
 </div>
 </div>
 <div class="nav-toc">
 <ul>
   <li><a href="setup.html">Setup guide</a></li>
-  <li><a href="basic-usage.html">Basic usage guide</a></li>
+  <li><a href="basics/index.html">Basic usage</a>
+  <ul>
+    <li><a href="basics/sbt-commands-and-tasks.html">SBT Commands</a></li>
+    <li><a href="basics/test-frameworks.html">Test frameworks</a></li>
+  </ul></li>
   <li><a href="advanced/index.html">Advanced usage</a>
   <ul>
     <li><a href="advanced/provider-states.html">Provider states</a></li>
     <li><a href="advanced/strict-mode.html">Strict mode</a></li>
-    <li><a href="advanced/pact-broker.html">Contract sharing with Pact Broker</a></li>
+    <li><a href="advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
-  <li><a href="philosophy/index.html">Concepts and background</a>
+  <li><a href="articles/index.html">Articles</a>
   <ul>
-    <li><a href="philosophy/motivation.html">Motivation</a></li>
-    <li><a href="philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
+    <li><a href="articles/motivation.html">Motivation</a></li>
+    <li><a href="articles/pact-vs-integration.html">Pact vs Integration</a></li>
+    <li><a href="articles/verification-strategies.html">Verification strategies</a></li>
   </ul></li>
-  <li><a href="example.html">Scala-Pact Example Projects</a></li>
+  <li><a href="examples/index.html">Example projects</a>
+  <ul>
+    <li><a href="examples/consumer.html">The Consumer</a></li>
+    <li><a href="examples/provider.html">The Provider</a></li>
+  </ul></li>
   <li><a href="help.html">Get help</a></li>
-  <li><a href="project-deps.html">Library dependencies</a></li>
+  <li><a href="project-deps.html">Dependencies</a></li>
   <li><a href="change-log.html">Change log</a></li>
   <li><a href="contributing.html">How to contribute</a></li>
 </ul>
@@ -122,25 +140,26 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#scala-pact-documentation" name="scala-pact-documentation" class="anchor"><span class="anchor-link"></span></a>Scala-Pact Documentation</h1>
+<h1><a href="#scala-pact" name="scala-pact" class="anchor"><span class="anchor-link"></span></a>Scala-Pact</h1>
 <p>Scala-Pact is a library for generating Consumer Driven Contract files in Scala projects following the PACT standard using <a href="http://www.scalatest.org/">ScalaTest</a>. Includes supporting tools that use Pact files to verify and stub services.</p>
-<p>ScalaPact is intended for Scala developers who are looking for a better way to manage the HTTP contracts between their services.</p>
+<p>Scala-Pact is intended for Scala developers who are looking for a better way to manage the HTTP contracts between their services.</p>
 <h2><a href="#source-code" name="source-code" class="anchor"><span class="anchor-link"></span></a>Source code</h2>
 <p>The source for Scala-Pact can be found on <a href="https://github.com/ITV/scala-pact">github</a>.</p>
 <h2><a href="#acknowledgments" name="acknowledgments" class="anchor"><span class="anchor-link"></span></a>Acknowledgments</h2>
-<p>ScalaPact is not an original idea - this project would never have happened without those who came before us:</p>
+<p>Scala-Pact is not an original idea - this project would never have happened without those who came before us:</p>
 <ol>
   <li><a href="https://github.com/DiUS">DiUS</a></li>
   <li><a href="https://github.com/pact-foundation">Pact Foundation</a></li>
   <li><a href="http://martinfowler.com/articles/consumerDrivenContracts.html">Thoughtworks / Ian Robinson / Martin Fowler</a></li>
 </ol>
+<p>It would also not have been possible to get the project to it&rsquo;s current state without the efforts of the people who have contributed to it. Either as code contributors (see the <a href="change-log.html">change log</a> for details), idea generators / critics, or as fearless testers using it on production systems even though they should know better.</p>
 <h2><a href="#change-log" name="change-log" class="anchor"><span class="anchor-link"></span></a>Change Log</h2>
 <p>Updates and information about changes made between releases can be found in the <a href="change-log.html">change log</a>.</p>
 <h2><a href="#licence" name="licence" class="anchor"><span class="anchor-link"></span></a>Licence</h2>
 <p>Scala-Pact is free to use under the ITV OSS licence, more information can be found <a href="https://github.com/ITV/scala-pact/blob/master/LICENCE.md">in the licence file</a>.</p>
 <h2><a href="#example-projects" name="example-projects" class="anchor"><span class="anchor-link"></span></a>Example projects</h2>
 <p>Fully working, albeit simple, example projects have been setup in the <a href="https://github.com/ITV/scala-pact/tree/master/example">example folder</a>.</p>
-<h2><a href="#pact-specification-compliance-level" name="pact-specification-compliance-level" class="anchor"><span class="anchor-link"></span></a>Pact Specification Compliance Level</h2>
+<h2><a href="#pact-compliance" name="pact-compliance" class="anchor"><span class="anchor-link"></span></a>Pact Compliance</h2>
 <p>Scala-Pact is now fully compliant with version 2 of the official pact specification.</p>
 <h2><a href="#contributing" name="contributing" class="anchor"><span class="anchor-link"></span></a>Contributing</h2>
 <p>All contributions are very welcome, please see our <a href="contributing.html">contributing guide</a> for details of how to get involved.</p>
@@ -154,14 +173,14 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="nav-title">On this page:</div>
 <div class="nav-toc">
 <ul>
-  <li><a href="index.html#scala-pact-documentation">Scala-Pact Documentation</a>
+  <li><a href="index.html#scala-pact">Scala-Pact</a>
   <ul>
     <li><a href="index.html#source-code">Source code</a></li>
     <li><a href="index.html#acknowledgments">Acknowledgments</a></li>
     <li><a href="index.html#change-log">Change Log</a></li>
     <li><a href="index.html#licence">Licence</a></li>
     <li><a href="index.html#example-projects">Example projects</a></li>
-    <li><a href="index.html#pact-specification-compliance-level">Pact Specification Compliance Level</a></li>
+    <li><a href="index.html#pact-compliance">Pact Compliance</a></li>
     <li><a href="index.html#contributing">Contributing</a></li>
   </ul></li>
 </ul>

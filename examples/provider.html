@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Provider states · Scala-Pact</title>
+<title>The Provider · Scala-Pact</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='website'/>
@@ -42,7 +42,7 @@
   </ul></li>
   <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
-    <li><a href="../advanced/provider-states.html" class="active">Provider states</a></li>
+    <li><a href="../advanced/provider-states.html">Provider states</a></li>
     <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
     <li><a href="../advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
@@ -55,7 +55,7 @@
   <li><a href="../examples/index.html">Example projects</a>
   <ul>
     <li><a href="../examples/consumer.html">The Consumer</a></li>
-    <li><a href="../examples/provider.html">The Provider</a></li>
+    <li><a href="../examples/provider.html" class="active">The Provider</a></li>
   </ul></li>
   <li><a href="../help.html">Get help</a></li>
   <li><a href="../project-deps.html">Dependencies</a></li>
@@ -105,7 +105,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   </ul></li>
   <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
-    <li><a href="../advanced/provider-states.html" class="active">Provider states</a></li>
+    <li><a href="../advanced/provider-states.html">Provider states</a></li>
     <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
     <li><a href="../advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
@@ -118,7 +118,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   <li><a href="../examples/index.html">Example projects</a>
   <ul>
     <li><a href="../examples/consumer.html">The Consumer</a></li>
-    <li><a href="../examples/provider.html">The Provider</a></li>
+    <li><a href="../examples/provider.html" class="active">The Provider</a></li>
   </ul></li>
   <li><a href="../help.html">Get help</a></li>
   <li><a href="../project-deps.html">Dependencies</a></li>
@@ -138,8 +138,8 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="nav-breadcrumbs">
 <ul>
   <li><a href="../index.html">Scala-Pact</a></li>
-  <li><a href="../advanced/index.html">Advanced usage</a></li>
-  <li>Provider states</li>
+  <li><a href="../examples/index.html">Example projects</a></li>
+  <li>The Provider</li>
 </ul>
 </div>
 </div>
@@ -147,76 +147,63 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#provider-states" name="provider-states" class="anchor"><span class="anchor-link"></span></a>Provider states</h1>
-<p>Scala-Pact currently offers limited support for provider states.</p>
-<p>Sometimes, you need to warn your provider that a contract relies on the providing system being in a particular state. For example, your contract describes requesting a document resource via a GET request with the document&rsquo;s id as a query parameter. If you send the Pact contract to your provider, but that document id doesn&rsquo;t exist on their system, then verification will fail through no-ones fault.</p>
-<p>To warn the provider about such requirements, we use provider states. In the tests these are simply strings in the <code>given()</code> method as below:</p>
-<pre class="prettyprint"><code>forgePact
-  .between(&quot;My Consumer&quot;)
-  .and(&quot;Their Provider Service&quot;)
-  .addInteraction(
-    interaction
-      .description(&quot;Fetching a specific ID&quot;)
-      .given(&quot;Resource with ID 1234 exists&quot;)
-      .uponReceiving(&quot;/document/lookup?id=1234&quot;)
-      .willRespondWith(200, &quot;ID: 1234 Exists&quot;)
-  )
-  .runConsumerTest { mockConfig =&gt;
-
-    val result = SimpleClient.doGetRequest(mockConfig.baseUrl, endPoint, Map.empty)
-
-    result.status should equal(200)
-    result.body should equal(&quot;ID: 1234 Exists&quot;)
-
-  }
+<h1><a href="#the-provider" name="the-provider" class="anchor"><span class="anchor-link"></span></a>The Provider</h1>
+<p>In the <a href="consumer.html">consumer</a> example guide we generated our Pact contract. Now to see if it works!</p>
+<p>As previously mentioned, there are two <a href="../articles/verification-strategies.md">verification strategies</a> and both are demonstrated in the example projects.</p>
+<h2><a href="#strategy-1-external-verification" name="strategy-1-external-verification" class="anchor"><span class="anchor-link"></span></a>Strategy #1: External Verification</h2>
+<p>The advantage of this strategy is that it requires no special work inside your service. The drawback is that it does require you to be able to run the service locally and to be able to set up any state you might require using provider states or some other mechanism.</p>
+<p>You will need two terminal windows, both of which are open in the <code>provider</code> directory.</p>
+<p>In the first terminal window, run <code>sbt run</code> to start the service.</p>
+<p>In the second terminal window, run:</p>
+<pre class="prettyprint"><code>sbt &quot;pact-verify --source delivered_pacts/ --host localhost --port 8080&quot;
 </code></pre>
-<p><a href="https://github.com/ITV/scalapact/blob/master/scalapact-scalatest/src/test/scala/com/itv/scalapact/ExampleSpec.scala">Example taken from the ExampleSpec test suite.</a></p>
-<p>The <code>given(&quot;Resource with ID 1234 exists&quot;)</code> string is actually a key that the provider can hook into! It shows up in the Pact contract under the <code>providerState</code> field like this:</p>
-<pre class="prettyprint"><code>{
-  &quot;provider&quot; : {
-    &quot;name&quot; : &quot;Their Provider Service&quot;
-  },
-  &quot;consumer&quot; : {
-    &quot;name&quot; : &quot;My Consumer&quot;
-  },
-  &quot;interactions&quot; : [
-    {
-      &quot;providerState&quot; : &quot;Resource with ID 1234 exists&quot;,
-      &quot;description&quot; : &quot;Fetching a specific ID&quot;,
-      &quot;request&quot; : {
-        &quot;method&quot; : &quot;GET&quot;,
-        &quot;path&quot; : &quot;/provider-state&quot;,
-        &quot;query&quot; : &quot;id=1234&quot;
-      },
-      &quot;response&quot; : {
-        &quot;status&quot; : 200,
-        &quot;body&quot; : &quot;ID: 1234 Exists&quot;
-      }
+<p><em>Note: the <code>--source delivered_pacts/</code> bit that tells the verifier you want to use local pact files in the directory specified.</em></p>
+<p>This will replay the request(s) in the Pact contract file against the service and check that the responses match.</p>
+<h2><a href="#strategy-2-internal-verification" name="strategy-2-internal-verification" class="anchor"><span class="anchor-link"></span></a>Strategy #2: Internal Verification</h2>
+<p>The advantage of this strategy is that setting up state is probably not an issue, you have full access to your project code base and running the verification is as simple as running your test cases (if you set it up correctly). The drawback is that you will need to do more work on your service to make sure your service can be run from inside a test case and that your core business logic can be mocked out.</p>
+<p>To run the verification, all you have to do is navigate to the <code>provider_tests</code> directory and run <code>sbt test</code>. That&rsquo;s it.</p>
+<h3><a href="#additionally-provider-states" name="additionally-provider-states" class="anchor"><span class="anchor-link"></span></a>Additionally&hellip; Provider States</h3>
+<p>This example setup contains one extra thing, which is an example of how to use provider states. The test suite declares a <code>given(&quot;...&quot;)</code> requirement and it is fulfilled during external verification by the function in the <code>pact.sbt</code> at the root of the provider project.</p>
+<p>The internal verification does not make use of provider states since the services setup happens during the <code>beforeAll()</code> and <code>afterAll()</code> functions. However, the mechanism for making use of provider states does exist, you just need to replace <code>.noSetupRequired</code> with something like:</p>
+<pre class="prettyprint"><code>.setupProviderState(&quot;given&quot;){
+  key =&gt;
+    key match {
+      case &quot;Document 1234 exists&quot; =&gt;
+        // Some code to inject document 1234
+        true
+      case _ =&gt;
+        // Didn&#39;t find the key, but maybe there wasn&#39;t one for this contract.
+        // So no point failing yet.
+        true
     }
-  ]
 }
 </code></pre>
-<p>On the provider&rsquo;s side, before verification they can opt to take action on any of these keys by adding a <code>pact.sbt</code> file to the root of their Scala project. Here is an example of the contents, again taken from the example suite:</p>
-<pre class="prettyprint"><code>import com.itv.scalapact.plugin.ScalaPactPlugin._
-
-providerStates := Seq(
-  (&quot;Resource with ID 1234 exists&quot;, (key: String) =&gt; {
-    println(&quot;Injecting key 1234 into the database...&quot;)
-    // Do some work to ensure the system under test is
-    // in an appropriate state before verification
-    true
-  })
-)
-</code></pre>
-<p><em>Notice it&rsquo;s the same string!</em></p>
-<p>Now when the provider runs the verification, the function they wrote will be invoked prior to the relevant interaction being verified.</p>
-<p>The providerStates settings object is a <code>Seq[(String, String =&gt; Boolean)]</code> where the first string is the <code>key</code> and the <code>String =&gt; Boolean</code> is a function you describe that simply takes the <code>key</code> and returns whether your code ran successfully or not.</p>
-<p>The intention is to create helper objects in the future for running common tasks like executing shell scripts but at the moment the functions are pure Scala and it&rsquo;s up to you how you use them.</p>
+<p>The function signature is <code>String =&gt; Boolean</code> where the <code>String</code> is the key value of the pact contract and <code>Boolean</code> is a way for you to say if your setup operation was a success or a failure.</p>
+<h2><a href="#things-to-note" name="things-to-note" class="anchor"><span class="anchor-link"></span></a>Things to note</h2>
+<ol>
+  <li>The consumer and provider scala projects both use different case classes to represent the data. This does not matter, only the Pact file matters.</li>
+  <li>The consumer and provider scala projects both use different json libraries to read/write the json. This does not matter either, the contract is in no way less solid for the difference in library or marshalling logic.</li>
+</ol>
 <div class="nav-next">
-<p><strong>Next:</strong> <a href="../advanced/strict-mode.html">Strict mode</a></p>
+<p><strong>Next:</strong> <a href="../help.html">Get help</a></p>
 </div>
 </div>
 <div class="large-3 show-for-large column" data-sticky-container>
+<nav class="sidebar sticky" data-sticky data-anchor="docs" data-sticky-on="large">
+<div class="page-nav">
+<div class="nav-title">On this page:</div>
+<div class="nav-toc">
+<ul>
+  <li><a href="../examples/provider.html#the-provider">The Provider</a>
+  <ul>
+    <li><a href="../examples/provider.html#strategy-1-external-verification">Strategy #1: External Verification</a></li>
+    <li><a href="../examples/provider.html#strategy-2-internal-verification">Strategy #2: Internal Verification</a></li>
+    <li><a href="../examples/provider.html#things-to-note">Things to note</a></li>
+  </ul></li>
+</ul>
+</div>
+</div>
+</nav>
 </div>
 </div>
 

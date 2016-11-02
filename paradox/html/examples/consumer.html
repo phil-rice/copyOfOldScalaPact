@@ -2,19 +2,19 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Scala-Pact Example Projects · Scala-Pact Documentation</title>
+<title>The Consumer · Scala-Pact</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='website'/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:100normal,100italic,300normal,300italic,400normal,400italic,500normal,500italic,700normal,700italic,900normal,900italicc" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/page.js"></script>
-<link rel="stylesheet" type="text/css" href="lib/normalize.css/normalize.css"/>
-<link rel="stylesheet" type="text/css" href="lib/foundation/dist/foundation.min.css"/>
-<link rel="stylesheet" type="text/css" href="css/page.css"/>
+<script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../js/page.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/normalize.css/normalize.css"/>
+<link rel="stylesheet" type="text/css" href="../lib/foundation/dist/foundation.min.css"/>
+<link rel="stylesheet" type="text/css" href="../css/page.css"/>
 
 <!--
-<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="shortcut icon" href="../images/favicon.ico" />
 -->
 </head>
 
@@ -25,33 +25,42 @@
 <div class="off-canvas position-left" id="off-canvas-menu" data-off-canvas>
 <nav class="off-canvas-nav">
 <div class="nav-home">
-<a href="index.html" >
-<span class="home-icon">⌂</span>Scala-Pact Documentation
+<a href="../index.html" >
+<span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-1.0.2
+2.0.0
 </div>
 </div>
 <div class="nav-toc">
 <ul>
-  <li><a href="setup.html">Setup guide</a></li>
-  <li><a href="basic-usage.html">Basic usage guide</a></li>
-  <li><a href="advanced/index.html">Advanced usage</a>
+  <li><a href="../setup.html">Setup guide</a></li>
+  <li><a href="../basics/index.html">Basic usage</a>
   <ul>
-    <li><a href="advanced/provider-states.html">Provider states</a></li>
-    <li><a href="advanced/strict-mode.html">Strict mode</a></li>
-    <li><a href="advanced/pact-broker.html">Contract sharing with Pact Broker</a></li>
+    <li><a href="../basics/sbt-commands-and-tasks.html">SBT Commands</a></li>
+    <li><a href="../basics/test-frameworks.html">Test frameworks</a></li>
   </ul></li>
-  <li><a href="philosophy/index.html">Concepts and background</a>
+  <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
-    <li><a href="philosophy/motivation.html">Motivation</a></li>
-    <li><a href="philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
+    <li><a href="../advanced/provider-states.html">Provider states</a></li>
+    <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
+    <li><a href="../advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
-  <li><a href="example.html" class="active">Scala-Pact Example Projects</a></li>
-  <li><a href="help.html">Get help</a></li>
-  <li><a href="project-deps.html">Library dependencies</a></li>
-  <li><a href="change-log.html">Change log</a></li>
-  <li><a href="contributing.html">How to contribute</a></li>
+  <li><a href="../articles/index.html">Articles</a>
+  <ul>
+    <li><a href="../articles/motivation.html">Motivation</a></li>
+    <li><a href="../articles/pact-vs-integration.html">Pact vs Integration</a></li>
+    <li><a href="../articles/verification-strategies.html">Verification strategies</a></li>
+  </ul></li>
+  <li><a href="../examples/index.html">Example projects</a>
+  <ul>
+    <li><a href="../examples/consumer.html" class="active">The Consumer</a></li>
+    <li><a href="../examples/provider.html">The Provider</a></li>
+  </ul></li>
+  <li><a href="../help.html">Get help</a></li>
+  <li><a href="../project-deps.html">Dependencies</a></li>
+  <li><a href="../change-log.html">Change log</a></li>
+  <li><a href="../contributing.html">How to contribute</a></li>
 </ul>
 </div>
 
@@ -66,7 +75,7 @@
 H3.6C3.048,13,3,13.447,3,14c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,13.447,16.952,13,16.4,13z M3.6,7H16.4
 C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.048,7,3.6,7z"/></svg>
 </a>
-<div class="title"><a href="index.html">Scala-Pact Documentation</a></div>
+<div class="title"><a href="../index.html">Scala-Pact</a></div>
 
 <!--
 <a href="https://www.example.com" class="logo show-for-medium">logo</a>
@@ -79,33 +88,42 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="medium-3 large-2 show-for-medium column">
 <nav class="site-nav">
 <div class="nav-home">
-<a href="index.html" >
-<span class="home-icon">⌂</span>Scala-Pact Documentation
+<a href="../index.html" >
+<span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-1.0.2
+2.0.0
 </div>
 </div>
 <div class="nav-toc">
 <ul>
-  <li><a href="setup.html">Setup guide</a></li>
-  <li><a href="basic-usage.html">Basic usage guide</a></li>
-  <li><a href="advanced/index.html">Advanced usage</a>
+  <li><a href="../setup.html">Setup guide</a></li>
+  <li><a href="../basics/index.html">Basic usage</a>
   <ul>
-    <li><a href="advanced/provider-states.html">Provider states</a></li>
-    <li><a href="advanced/strict-mode.html">Strict mode</a></li>
-    <li><a href="advanced/pact-broker.html">Contract sharing with Pact Broker</a></li>
+    <li><a href="../basics/sbt-commands-and-tasks.html">SBT Commands</a></li>
+    <li><a href="../basics/test-frameworks.html">Test frameworks</a></li>
   </ul></li>
-  <li><a href="philosophy/index.html">Concepts and background</a>
+  <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
-    <li><a href="philosophy/motivation.html">Motivation</a></li>
-    <li><a href="philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
+    <li><a href="../advanced/provider-states.html">Provider states</a></li>
+    <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
+    <li><a href="../advanced/pact-broker.html">Pact Broker</a></li>
   </ul></li>
-  <li><a href="example.html" class="active">Scala-Pact Example Projects</a></li>
-  <li><a href="help.html">Get help</a></li>
-  <li><a href="project-deps.html">Library dependencies</a></li>
-  <li><a href="change-log.html">Change log</a></li>
-  <li><a href="contributing.html">How to contribute</a></li>
+  <li><a href="../articles/index.html">Articles</a>
+  <ul>
+    <li><a href="../articles/motivation.html">Motivation</a></li>
+    <li><a href="../articles/pact-vs-integration.html">Pact vs Integration</a></li>
+    <li><a href="../articles/verification-strategies.html">Verification strategies</a></li>
+  </ul></li>
+  <li><a href="../examples/index.html">Example projects</a>
+  <ul>
+    <li><a href="../examples/consumer.html" class="active">The Consumer</a></li>
+    <li><a href="../examples/provider.html">The Provider</a></li>
+  </ul></li>
+  <li><a href="../help.html">Get help</a></li>
+  <li><a href="../project-deps.html">Dependencies</a></li>
+  <li><a href="../change-log.html">Change log</a></li>
+  <li><a href="../contributing.html">How to contribute</a></li>
 </ul>
 </div>
 
@@ -119,8 +137,9 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="medium-12 show-for-medium column">
 <div class="nav-breadcrumbs">
 <ul>
-  <li><a href="index.html">Scala-Pact Documentation</a></li>
-  <li>Scala-Pact Example Projects</li>
+  <li><a href="../index.html">Scala-Pact</a></li>
+  <li><a href="../examples/index.html">Example projects</a></li>
+  <li>The Consumer</li>
 </ul>
 </div>
 </div>
@@ -128,11 +147,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#scala-pact-example-projects" name="scala-pact-example-projects" class="anchor"><span class="anchor-link"></span></a>Scala-Pact Example Projects</h1>
-<p>This is a simple demonstration of Pact CDC testing in action. There are two SBT projects, one for the consumer and another for the provider. Both contain the bare minimum to demonstrate how pact testing works.</p>
-<p>The examples don&rsquo;t go into great depth, for more information you should refer to the main <a href="https://github.com/ITV/scala-pact/blob/master/README.md">README</a> file.</p>
-<p>There is an assumption that you will be running this on linux or mac and have Scala + SBT setup.</p>
-<h2><a href="#consumer" name="consumer" class="anchor"><span class="anchor-link"></span></a>Consumer</h2>
+<h1><a href="#the-consumer" name="the-consumer" class="anchor"><span class="anchor-link"></span></a>The Consumer</h1>
 <p>The consumer project owns and generates the Pact contract file.</p>
 <p>The Pact contract file is the result of an <a href="https://github.com/ITV/scala-pact/blob/example-projects/example/consumer/src/test/scala/com/example/consumer/ProviderClientSpec.scala">integration test</a> that tests a <a href="https://github.com/ITV/scala-pact/blob/example-projects/example/consumer/src/main/scala/com/example/consumer/ProviderClient.scala">real, albeit crude piece of client code</a> against a mock.</p>
 <p>To run the pact-tests, do the following (assuming you&rsquo;ve checked out the project and are in the example directory):</p>
@@ -151,24 +166,8 @@ sbt pact-test
 <pre class="prettyprint"><code>bash deliver.sh
 </code></pre>
 <p>This script simply copies the <code>Consumer_Provider.json</code> file into the <code>provider/delivered_pacts</code> directory.</p>
-<h2><a href="#provider" name="provider" class="anchor"><span class="anchor-link"></span></a>Provider</h2>
-<p>Now to see if it works!</p>
-<p>You will need two terminal windows, both of which are open in the <code>provider</code> directory.</p>
-<p>In the first terminal window, run <code>sbt run</code> to start the service.</p>
-<p>In the second terminal window, run:</p>
-<pre class="prettyprint"><code>sbt &quot;pact-verify --source delivered_pacts/ --host localhost --port 8080&quot;
-</code></pre>
-<p><em>Note: the <code>--source delivered_pacts/</code> bit that tells the verifier you want to use local pact files in the directory specified.</em></p>
-<p>This will replay the request(s) in the Pact contract file against the service and check that the responses match.</p>
-<h3><a href="#additionally" name="additionally" class="anchor"><span class="anchor-link"></span></a>Additionally&hellip;</h3>
-<p>This example setup contains one extra thing, which is an example of how to use provider states. The test suite declares a <code>given(&quot;...&quot;)</code> requirement and it is fulfilled during verification by the function in the <code>pact.sbt</code> at the root of the provider project.</p>
-<h2><a href="#things-to-note" name="things-to-note" class="anchor"><span class="anchor-link"></span></a>Things to note</h2>
-<ol>
-  <li>The consumer and provider scala projects both use different case classes to represent the data. This does not matter, only the Pact file matters.</li>
-  <li>The consumer and provider scala projects both use different json libraries to read/write the json. This does not matter either, the contract is in no way less solid for the difference in library or marshalling logic.</li>
-</ol>
 <div class="nav-next">
-<p><strong>Next:</strong> <a href="help.html">Get help</a></p>
+<p><strong>Next:</strong> <a href="../examples/provider.html">The Provider</a></p>
 </div>
 </div>
 <div class="large-3 show-for-large column" data-sticky-container>
@@ -177,13 +176,10 @@ sbt pact-test
 <div class="nav-title">On this page:</div>
 <div class="nav-toc">
 <ul>
-  <li><a href="example.html#scala-pact-example-projects">Scala-Pact Example Projects</a>
+  <li><a href="../examples/consumer.html#the-consumer">The Consumer</a>
   <ul>
-    <li><a href="example.html#consumer">Consumer</a></li>
-    <li><a href="example.html#stubbing">Stubbing</a></li>
-    <li><a href="example.html#delivering-the-pact-file">Delivering the pact file</a></li>
-    <li><a href="example.html#provider">Provider</a></li>
-    <li><a href="example.html#things-to-note">Things to note</a></li>
+    <li><a href="../examples/consumer.html#stubbing">Stubbing</a></li>
+    <li><a href="../examples/consumer.html#delivering-the-pact-file">Delivering the pact file</a></li>
   </ul></li>
 </ul>
 </div>
@@ -243,13 +239,13 @@ sbt pact-test
 </div>
 </body>
 
-<script type="text/javascript" src="lib/foundation/dist/foundation.min.js"></script>
+<script type="text/javascript" src="../lib/foundation/dist/foundation.min.js"></script>
 <script type="text/javascript">jQuery(document).foundation();</script>
-<script type="text/javascript" src="js/magellan.js"></script>
+<script type="text/javascript" src="../js/magellan.js"></script>
 
-<style type="text/css">@import "lib/prettify/prettify.css";</style>
-<script type="text/javascript" src="lib/prettify/prettify.js"></script>
-<script type="text/javascript" src="lib/prettify/lang-scala.js"></script>
+<style type="text/css">@import "../lib/prettify/prettify.css";</style>
+<script type="text/javascript" src="../lib/prettify/prettify.js"></script>
+<script type="text/javascript" src="../lib/prettify/lang-scala.js"></script>
 <script type="text/javascript">jQuery(function(){window.prettyPrint && prettyPrint()});</script>
 
 </html>

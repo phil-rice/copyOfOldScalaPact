@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Contract sharing with Pact Broker · Scala-Pact Documentation</title>
+<title>Pact Broker · Scala-Pact</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='website'/>
@@ -26,30 +26,39 @@
 <nav class="off-canvas-nav">
 <div class="nav-home">
 <a href="../index.html" >
-<span class="home-icon">⌂</span>Scala-Pact Documentation
+<span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-1.0.2
+2.0.0
 </div>
 </div>
 <div class="nav-toc">
 <ul>
   <li><a href="../setup.html">Setup guide</a></li>
-  <li><a href="../basic-usage.html">Basic usage guide</a></li>
+  <li><a href="../basics/index.html">Basic usage</a>
+  <ul>
+    <li><a href="../basics/sbt-commands-and-tasks.html">SBT Commands</a></li>
+    <li><a href="../basics/test-frameworks.html">Test frameworks</a></li>
+  </ul></li>
   <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
     <li><a href="../advanced/provider-states.html">Provider states</a></li>
     <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
-    <li><a href="../advanced/pact-broker.html" class="active">Contract sharing with Pact Broker</a></li>
+    <li><a href="../advanced/pact-broker.html" class="active">Pact Broker</a></li>
   </ul></li>
-  <li><a href="../philosophy/index.html">Concepts and background</a>
+  <li><a href="../articles/index.html">Articles</a>
   <ul>
-    <li><a href="../philosophy/motivation.html">Motivation</a></li>
-    <li><a href="../philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
+    <li><a href="../articles/motivation.html">Motivation</a></li>
+    <li><a href="../articles/pact-vs-integration.html">Pact vs Integration</a></li>
+    <li><a href="../articles/verification-strategies.html">Verification strategies</a></li>
   </ul></li>
-  <li><a href="../example.html">Scala-Pact Example Projects</a></li>
+  <li><a href="../examples/index.html">Example projects</a>
+  <ul>
+    <li><a href="../examples/consumer.html">The Consumer</a></li>
+    <li><a href="../examples/provider.html">The Provider</a></li>
+  </ul></li>
   <li><a href="../help.html">Get help</a></li>
-  <li><a href="../project-deps.html">Library dependencies</a></li>
+  <li><a href="../project-deps.html">Dependencies</a></li>
   <li><a href="../change-log.html">Change log</a></li>
   <li><a href="../contributing.html">How to contribute</a></li>
 </ul>
@@ -66,7 +75,7 @@
 H3.6C3.048,13,3,13.447,3,14c0,0.553,0.048,1,0.6,1H16.4c0.552,0,0.6-0.447,0.6-1C17,13.447,16.952,13,16.4,13z M3.6,7H16.4
 C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.048,7,3.6,7z"/></svg>
 </a>
-<div class="title"><a href="../index.html">Scala-Pact Documentation</a></div>
+<div class="title"><a href="../index.html">Scala-Pact</a></div>
 
 <!--
 <a href="https://www.example.com" class="logo show-for-medium">logo</a>
@@ -80,30 +89,39 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <nav class="site-nav">
 <div class="nav-home">
 <a href="../index.html" >
-<span class="home-icon">⌂</span>Scala-Pact Documentation
+<span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-1.0.2
+2.0.0
 </div>
 </div>
 <div class="nav-toc">
 <ul>
   <li><a href="../setup.html">Setup guide</a></li>
-  <li><a href="../basic-usage.html">Basic usage guide</a></li>
+  <li><a href="../basics/index.html">Basic usage</a>
+  <ul>
+    <li><a href="../basics/sbt-commands-and-tasks.html">SBT Commands</a></li>
+    <li><a href="../basics/test-frameworks.html">Test frameworks</a></li>
+  </ul></li>
   <li><a href="../advanced/index.html">Advanced usage</a>
   <ul>
     <li><a href="../advanced/provider-states.html">Provider states</a></li>
     <li><a href="../advanced/strict-mode.html">Strict mode</a></li>
-    <li><a href="../advanced/pact-broker.html" class="active">Contract sharing with Pact Broker</a></li>
+    <li><a href="../advanced/pact-broker.html" class="active">Pact Broker</a></li>
   </ul></li>
-  <li><a href="../philosophy/index.html">Concepts and background</a>
+  <li><a href="../articles/index.html">Articles</a>
   <ul>
-    <li><a href="../philosophy/motivation.html">Motivation</a></li>
-    <li><a href="../philosophy/pact-vs-integration.html">Pact tests vs integration tests</a></li>
+    <li><a href="../articles/motivation.html">Motivation</a></li>
+    <li><a href="../articles/pact-vs-integration.html">Pact vs Integration</a></li>
+    <li><a href="../articles/verification-strategies.html">Verification strategies</a></li>
   </ul></li>
-  <li><a href="../example.html">Scala-Pact Example Projects</a></li>
+  <li><a href="../examples/index.html">Example projects</a>
+  <ul>
+    <li><a href="../examples/consumer.html">The Consumer</a></li>
+    <li><a href="../examples/provider.html">The Provider</a></li>
+  </ul></li>
   <li><a href="../help.html">Get help</a></li>
-  <li><a href="../project-deps.html">Library dependencies</a></li>
+  <li><a href="../project-deps.html">Dependencies</a></li>
   <li><a href="../change-log.html">Change log</a></li>
   <li><a href="../contributing.html">How to contribute</a></li>
 </ul>
@@ -119,9 +137,9 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="medium-12 show-for-medium column">
 <div class="nav-breadcrumbs">
 <ul>
-  <li><a href="../index.html">Scala-Pact Documentation</a></li>
+  <li><a href="../index.html">Scala-Pact</a></li>
   <li><a href="../advanced/index.html">Advanced usage</a></li>
-  <li>Contract sharing with Pact Broker</li>
+  <li>Pact Broker</li>
 </ul>
 </div>
 </div>
@@ -129,12 +147,12 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#contract-sharing-with-pact-broker" name="contract-sharing-with-pact-broker" class="anchor"><span class="anchor-link"></span></a>Contract sharing with Pact Broker</h1>
+<h1><a href="#pact-broker" name="pact-broker" class="anchor"><span class="anchor-link"></span></a>Pact Broker</h1>
 <p>During a build process you will need some mechanism for delivering the Pact files your consumer tests generate to your provider ready for verification.</p>
 <p>You can do this any way you like, they are just JSON files after all, but we are currently exploring <a href="https://github.com/bethesque/pact_broker">pact-broker</a>. Pact Broker is a Ruby service that allows you to post and look up versioned Pact files.</p>
 <p><em>An opinionated note on versioning:</em> Focus on versioning your API&rsquo;s not your Pact files! It can be handy to have versions of Pact files around but you should not be pushing a breaking API changes and communicating them to your provider with versioned Pact files. A breaking API change is a new API version. Theoretically your provider should always be able to ask for the latest Pact files for each API version and have confidence that they are correct.</p>
 <div class="nav-next">
-<p><strong>Next:</strong> <a href="../philosophy/index.html">Concepts and background</a></p>
+<p><strong>Next:</strong> <a href="../articles/index.html">Articles</a></p>
 </div>
 </div>
 <div class="large-3 show-for-large column" data-sticky-container>
