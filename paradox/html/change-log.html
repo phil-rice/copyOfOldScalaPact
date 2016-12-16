@@ -29,7 +29,7 @@
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.0.0
+2.1.0
 </div>
 </div>
 <div class="nav-toc">
@@ -92,7 +92,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.0.0
+2.1.0
 </div>
 </div>
 <div class="nav-toc">
@@ -148,6 +148,20 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="small-12 large-9 column" id="docs">
 <h1><a href="#change-log" name="change-log" class="anchor"><span class="anchor-link"></span></a>Change log</h1>
 <p>All notable changes and releases to this project will be documented here.</p>
+<h2><a href="#2-1-0-2016-12-16" name="2-1-0-2016-12-16" class="anchor"><span class="anchor-link"></span></a>2.1.0 - 2016-12-16</h2>
+<ul>
+  <li>Scala 2.12 release
+    <ul>
+      <li>Depends on http4s 0.15.0a which is bundled with argonaut 6.2-RC1 and scalaz 7.2.7</li>
+    </ul>
+  </li>
+  <li>Fixed intermittent bug that failed otherwise good tests</li>
+  <li>Improved test speed</li>
+  <li>Fixed issue where having a large number of pact tests in one suite caused a failure (with thanks to <a href="https://github.com/BenParker22">BenParker22</a>)</li>
+  <li>Increased performance / capacity of pact stubber</li>
+  <li>Provider state failures now fail noisily</li>
+  <li>runConsumerTest returns a result instead of Unit (<a href="https://github.com/agustafson">agustafson</a>)</li>
+</ul>
 <h2><a href="#2-0-0-2016-11-01" name="2-0-0-2016-11-01" class="anchor"><span class="anchor-link"></span></a>2.0.0 - 2016-11-01</h2>
 <ul>
   <li>Full Pact Specification Version 2.0 Compliance</li>
@@ -187,6 +201,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <ul>
   <li><a href="change-log.html#change-log">Change log</a>
   <ul>
+    <li><a href="change-log.html#2-1-0-2016-12-16">2.1.0 - 2016-12-16</a></li>
     <li><a href="change-log.html#2-0-0-2016-11-01">2.0.0 - 2016-11-01</a></li>
     <li><a href="change-log.html#1-0-2-2016-10-04">1.0.2 - 2016-10-04</a></li>
     <li><a href="change-log.html#1-0-1-2016-07-19">1.0.1 - 2016-07-19</a></li>

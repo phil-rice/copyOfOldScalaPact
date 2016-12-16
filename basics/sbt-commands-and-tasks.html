@@ -29,7 +29,7 @@
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.0.0
+2.1.0
 </div>
 </div>
 <div class="nav-toc">
@@ -92,7 +92,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.0.0
+2.1.0
 </div>
 </div>
 <div class="nav-toc">
@@ -168,6 +168,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>If you prefer, you can use the stubber dynamically by adding and removing pacts using HTTP. All calls must be made with a special header:</p>
 <p><code>X-Pact-Admin=true</code></p>
 <ul>
+  <li><code>GET /stub/status</code> returns 200 every time, in case you just want to check it&rsquo;s running / accessible</li>
   <li><code>GET /interactions</code> returns a list of all currently loaded interactions</li>
   <li><code>POST | PUT /interactions</code> accepts a Pact JSON string and adds all the interactions to the pool it matches against</li>
   <li><code>DELETE /interactions</code> Clears all the current interactions so you can start again</li>
