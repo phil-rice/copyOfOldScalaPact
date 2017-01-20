@@ -155,7 +155,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>You will need two terminal windows, both of which are open in the <code>provider</code> directory.</p>
 <p>In the first terminal window, run <code>sbt run</code> to start the service.</p>
 <p>In the second terminal window, run:</p>
-<pre class="prettyprint"><code>sbt &quot;pact-verify --source delivered_pacts/ --host localhost --port 8080&quot;
+<pre><code>sbt &quot;pact-verify --source delivered_pacts/ --host localhost --port 8080&quot;
 </code></pre>
 <p><em>Note: the <code>--source delivered_pacts/</code> bit that tells the verifier you want to use local pact files in the directory specified.</em></p>
 <p>This will replay the request(s) in the Pact contract file against the service and check that the responses match.</p>
@@ -165,7 +165,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <h3><a href="#additionally-provider-states" name="additionally-provider-states" class="anchor"><span class="anchor-link"></span></a>Additionally&hellip; Provider States</h3>
 <p>This example setup contains one extra thing, which is an example of how to use provider states. The test suite declares a <code>given(&quot;...&quot;)</code> requirement and it is fulfilled during external verification by the function in the <code>pact.sbt</code> at the root of the provider project.</p>
 <p>The internal verification does not make use of provider states since the services setup happens during the <code>beforeAll()</code> and <code>afterAll()</code> functions. However, the mechanism for making use of provider states does exist, you just need to replace <code>.noSetupRequired</code> with something like:</p>
-<pre class="prettyprint"><code>.setupProviderState(&quot;given&quot;){
+<pre><code>.setupProviderState(&quot;given&quot;){
   key =&gt;
     key match {
       case &quot;Document 1234 exists&quot; =&gt;
@@ -241,7 +241,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <!--
 <div class="copyright">
-<span class="text">&copy; 2016</span>
+<span class="text">&copy; 2017</span>
 <a href="https://www.example.com" class="logo">logo</a>
 </div>
 -->

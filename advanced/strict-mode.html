@@ -154,7 +154,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>Whereas the original Pact implementations consider that a mismatch.</p>
 <p>To take body matching as an example, Scala-Pact&rsquo;s matching process states that as long as the expected document exists within the actual document, they are a match. This is very powerful because it allows you to only describe the parts of the response object you care about (**without using body matching rules!**). For example these two nonsense JSON blobs are a match:</p>
 <p>Expected (the part of the contract we care about) data and structure:</p>
-<pre class="prettyprint"><code>{
+<pre><code>{
   &quot;id&quot;: &quot;abc123&quot;,
   &quot;metadata&quot;: {
     &quot;name&quot;: &quot;Bob&quot;
@@ -167,7 +167,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 }
 </code></pre>
 <p>Actual:</p>
-<pre class="prettyprint"><code>{
+<pre><code>{
   &quot;metadata&quot;: {
     &quot;likesSports&quot;: true,
     &quot;name&quot;: &quot;Bob&quot;,
@@ -233,7 +233,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <!--
 <div class="copyright">
-<span class="text">&copy; 2016</span>
+<span class="text">&copy; 2017</span>
 <a href="https://www.example.com" class="logo">logo</a>
 </div>
 -->

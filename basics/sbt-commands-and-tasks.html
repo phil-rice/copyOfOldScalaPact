@@ -200,7 +200,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <h4><a href="#verifying-with-pact-broker-during-a-ci-build" name="verifying-with-pact-broker-during-a-ci-build" class="anchor"><span class="anchor-link"></span></a>Verifying with Pact Broker during a CI build</h4>
 <p>If you&rsquo;re using the publish command to send files to Pact Broker, you&rsquo;ll also want to know how to verify against them in the provider project.</p>
 <p>To do this, you need to add the following to either your <code>build.sbt</code> or <code>pact.sbt</code> file:</p>
-<pre class="prettyprint"><code>pactBrokerAddress := &quot;http://my-pact-broker:4321&quot;
+<pre><code>pactBrokerAddress := &quot;http://my-pact-broker:4321&quot;
 providerName := &quot;The Name Of This Service&quot;
 consumerNames := Seq(&quot;Consumer A&quot;, &quot;Consumer B&quot;)
 </code></pre>
@@ -272,7 +272,7 @@ consumerNames := Seq(&quot;Consumer A&quot;, &quot;Consumer B&quot;)
 
 <!--
 <div class="copyright">
-<span class="text">&copy; 2016</span>
+<span class="text">&copy; 2017</span>
 <a href="https://www.example.com" class="logo">logo</a>
 </div>
 -->

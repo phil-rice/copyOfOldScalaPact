@@ -151,7 +151,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>Scala-Pact currently offers limited support for provider states.</p>
 <p>Sometimes, you need to warn your provider that a contract relies on the providing system being in a particular state. For example, your contract describes requesting a document resource via a GET request with the document&rsquo;s id as a query parameter. If you send the Pact contract to your provider, but that document id doesn&rsquo;t exist on their system, then verification will fail through no-ones fault.</p>
 <p>To warn the provider about such requirements, we use provider states. In the tests these are simply strings in the <code>given()</code> method as below:</p>
-<pre class="prettyprint"><code>forgePact
+<pre><code>forgePact
   .between(&quot;My Consumer&quot;)
   .and(&quot;Their Provider Service&quot;)
   .addInteraction(
@@ -172,7 +172,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 </code></pre>
 <p><a href="https://github.com/ITV/scalapact/blob/master/scalapact-scalatest/src/test/scala/com/itv/scalapact/ExampleSpec.scala">Example taken from the ExampleSpec test suite.</a></p>
 <p>The <code>given(&quot;Resource with ID 1234 exists&quot;)</code> string is actually a key that the provider can hook into! It shows up in the Pact contract under the <code>providerState</code> field like this:</p>
-<pre class="prettyprint"><code>{
+<pre><code>{
   &quot;provider&quot; : {
     &quot;name&quot; : &quot;Their Provider Service&quot;
   },
@@ -197,7 +197,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 }
 </code></pre>
 <p>On the provider&rsquo;s side, before verification they can opt to take action on any of these keys by adding a <code>pact.sbt</code> file to the root of their Scala project. Here is an example of the contents, again taken from the example suite:</p>
-<pre class="prettyprint"><code>import com.itv.scalapact.plugin.ScalaPactPlugin._
+<pre><code>import com.itv.scalapact.plugin.ScalaPactPlugin._
 
 providerStates := Seq(
   (&quot;Resource with ID 1234 exists&quot;, (key: String) =&gt; {
@@ -254,7 +254,7 @@ providerStates := Seq(
 
 <!--
 <div class="copyright">
-<span class="text">&copy; 2016</span>
+<span class="text">&copy; 2017</span>
 <a href="https://www.example.com" class="logo">logo</a>
 </div>
 -->

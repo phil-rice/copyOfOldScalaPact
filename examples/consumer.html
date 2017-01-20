@@ -151,7 +151,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>The consumer project owns and generates the Pact contract file.</p>
 <p>The Pact contract file is the result of an <a href="https://github.com/ITV/scala-pact/blob/example-projects/example/consumer/src/test/scala/com/example/consumer/ProviderClientSpec.scala">integration test</a> that tests a <a href="https://github.com/ITV/scala-pact/blob/example-projects/example/consumer/src/main/scala/com/example/consumer/ProviderClient.scala">real, albeit crude piece of client code</a> against a mock.</p>
 <p>To run the pact-tests, do the following (assuming you&rsquo;ve checked out the project and are in the example directory):</p>
-<pre class="prettyprint"><code>cd consumer
+<pre><code>cd consumer
 sbt pact-test
 </code></pre>
 <p>You should now be able to see a file in the <code>consumer/target/pacts/</code> directory called <code>Consumer_Provider.json</code>. This is your Pact file that describes the behaviour you expect fro the Provider service.</p>
@@ -163,7 +163,7 @@ sbt pact-test
 <p>In a real scenario, you would probably use Pact Broker to send the newly created Pact contract to the Provider ahead of verification.</p>
 <p>In our demo, we&rsquo;re going to skip that on the assumption that you don&rsquo;t have a <a href="https://github.com/bethesque/pact_broker">Pact Broker</a> handy, but full details of how to integrate with <a href="https://github.com/bethesque/pact_broker">Pact Broker</a> can be found in the main <a href="https://github.com/ITV/scala-pact/blob/master/README.md">README</a> file.</p>
 <p>Instead we&rsquo;re going to use a script to do the delivery. Navigate back to the main example directory on the terminal and run:</p>
-<pre class="prettyprint"><code>bash deliver.sh
+<pre><code>bash deliver.sh
 </code></pre>
 <p>This script simply copies the <code>Consumer_Provider.json</code> file into the <code>provider/delivered_pacts</code> directory.</p>
 <div class="nav-next">
@@ -222,7 +222,7 @@ sbt pact-test
 
 <!--
 <div class="copyright">
-<span class="text">&copy; 2016</span>
+<span class="text">&copy; 2017</span>
 <a href="https://www.example.com" class="logo">logo</a>
 </div>
 -->
