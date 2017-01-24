@@ -29,7 +29,7 @@
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.1.0
+2.1.1
 </div>
 </div>
 <div class="nav-toc">
@@ -92,7 +92,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.1.0
+2.1.1
 </div>
 </div>
 <div class="nav-toc">
@@ -196,9 +196,29 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   ]
 }
 </code></pre>
-<p>On the provider&rsquo;s side, before verification they can opt to take action on any of these keys by adding a <code>pact.sbt</code> file to the root of their Scala project. Here is an example of the contents, again taken from the example suite:</p>
+<p>On the provider&rsquo;s side, before verification they can opt to take action on any of these keys.</p>
+<p>If they are performing verification based on a provider test case, this may not be necessary since setup could be done in a &ldquo;before and after&rdquo; way using your test framework of choise. The option remains to use provider states as well though, if you prefer.</p>
+<p>If verification is being done externally then the &ldquo;given&rdquo; <code>providerState</code> can be acted upon by adding a <code>pact.sbt</code> file to the root of their Scala project. Here is an example of the contents:</p>
 <pre><code>import com.itv.scalapact.plugin.ScalaPactPlugin._
 
+// New approach using a partial function to match the &quot;given&quot;.
+// Simple equality tests here but this is a normal pattern match so
+// you can do much more expressive matches should you so desire.
+providerStateMatcher := {
+  case key: String if key == &quot;Resource with ID 1234 exists&quot; =&gt;
+    println(&quot;Injecting key 1234 into the database...&quot;)
+
+    // Do some work to ensure the system under test is
+    // in an appropriate state before verification
+
+    true
+
+  case key: String if key == &quot;Something else&quot; =&gt;
+    // A different &#39;given&#39; provider state case
+    true
+}
+
+// Old approach, still valid
 providerStates := Seq(
   (&quot;Resource with ID 1234 exists&quot;, (key: String) =&gt; {
     println(&quot;Injecting key 1234 into the database...&quot;)
@@ -210,6 +230,7 @@ providerStates := Seq(
 </code></pre>
 <p><em>Notice it&rsquo;s the same string!</em></p>
 <p>Now when the provider runs the verification, the function they wrote will be invoked prior to the relevant interaction being verified.</p>
+<p>The providerStateMatcher settings function is a <code>PartialFunction[String, Boolean]</code> where the string is the given &ldquo;key&rdquo; and the rest is a function body that results in a boolean to indicate success or failure.</p>
 <p>The providerStates settings object is a <code>Seq[(String, String =&gt; Boolean)]</code> where the first string is the <code>key</code> and the <code>String =&gt; Boolean</code> is a function you describe that simply takes the <code>key</code> and returns whether your code ran successfully or not.</p>
 <p>The intention is to create helper objects in the future for running common tasks like executing shell scripts but at the moment the functions are pure Scala and it&rsquo;s up to you how you use them.</p>
 <div class="nav-next">
