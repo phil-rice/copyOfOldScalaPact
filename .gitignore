@@ -8,6 +8,7 @@ project/target
 .sbt-local
 sbt
 .ensime*
+typelevel.sbt
 
 # Misc
 .DS_Store

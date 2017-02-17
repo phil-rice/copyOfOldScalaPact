@@ -8,7 +8,10 @@ import com.itv.scalapactcore.{InteractionRequest, InteractionResponse}
 
 sealed trait MatchStatusOutcome
 case object MatchStatusSuccess extends MatchStatusOutcome
-case object MatchStatusFailed extends MatchStatusOutcome
+case class MatchStatusFailed(expected: Option[Int], actual: Option[Int]) extends MatchStatusOutcome {
+  val report: String =
+    s"""[Status mismatch] Expected: ${expected.map(_.toString).getOrElse("Missing")} Actual: ${actual.map(_.toString).getOrElse("Missing")}"""
+}
 
 sealed trait MatchHeadersOutcome
 case object MatchHeadersSuccess extends MatchHeadersOutcome
@@ -171,8 +174,7 @@ object MatchingInterpreters {
       def apply[A](stage: MatchResponseStageA[A]): Id[A] = {
         stage match {
           case MatchResponseStatus(expected, actual) =>
-            if(StatusMatching.matchStatusCodes(expected.status)(actual.status)) MatchStatusSuccess
-            else MatchStatusFailed
+            StatusMatching.matchStatusCodes(expected.status)(actual.status)
 
           case MatchResponseHeaders(expected, actual) =>
             if(HeaderMatching.matchHeaders(expected.matchingRules)(expected.headers)(actual.headers)) MatchHeadersSuccess
@@ -192,8 +194,7 @@ object MatchingInterpreters {
       def apply[A](stage: MatchResponseStageA[A]): Id[A] = {
         stage match {
           case MatchResponseStatus(expected, actual) =>
-            if(StatusMatching.matchStatusCodes(expected.status)(actual.status)) MatchStatusSuccess
-            else MatchStatusFailed
+            StatusMatching.matchStatusCodes(expected.status)(actual.status)
 
           case MatchResponseHeaders(expected, actual) =>
             if(HeaderMatching.matchHeaders(expected.matchingRules)(expected.headers)(actual.headers)) MatchHeadersSuccess
