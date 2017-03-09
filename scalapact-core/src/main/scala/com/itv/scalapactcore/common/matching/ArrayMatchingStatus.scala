@@ -6,6 +6,7 @@ sealed trait ArrayMatchingStatus extends Product with Serializable
 case object RuleMatchSuccess extends ArrayMatchingStatus
 case object RuleMatchFailure extends ArrayMatchingStatus
 case object NoRuleMatchRequired extends ArrayMatchingStatus
+case object RuleMatchStillRequired extends ArrayMatchingStatus
 
 case class MatchingRuleContext(path: String, rule: MatchingRule)
 
@@ -14,6 +15,10 @@ object ArrayMatchingStatus {
   val listArrayMatchStatusToSingle: List[ArrayMatchingStatus] => ArrayMatchingStatus = {
     case l: List[ArrayMatchingStatus] if l.contains(RuleMatchFailure) => RuleMatchFailure
     case l: List[ArrayMatchingStatus] if l.contains(RuleMatchSuccess) => RuleMatchSuccess
+    case l: List[ArrayMatchingStatus] if l.contains(RuleMatchStillRequired) => {
+      println("l" + l)
+      RuleMatchFailure
+    }
     case _ => NoRuleMatchRequired
   }
 }

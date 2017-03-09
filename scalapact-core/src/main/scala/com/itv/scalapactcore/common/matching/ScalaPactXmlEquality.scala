@@ -11,12 +11,14 @@ import com.itv.scalapactcore.common.ColourOuput._
 
 object ScalaPactXmlEquality {
 
-  implicit def toXmlEqualityWrapper(xmlElem: Elem): XmlEqualityWrapper = XmlEqualityWrapper(xmlElem)
+  implicit def toXmlEqualityWrapper(xmlElem: Node): XmlEqualityWrapper = XmlEqualityWrapper(xmlElem)
 
-  case class XmlEqualityWrapper(xml: Elem) {
-    def =~(to: Elem): BodyMatchingRules => Boolean = matchingRules =>
-      PermissiveXmlEqualityHelper.areEqual(xmlPathToJsonPath(matchingRules), xml, to, xml.label)
-    def =<>=(to: Elem): Boolean => BodyMatchingRules => Boolean = beSelectivelyPermissive => matchingRules =>
+  case class XmlEqualityWrapper(xml: Node) {
+    def =~(to: Node): BodyMatchingRules => Boolean = matchingRules => {
+      println("STARTING XPATH " + xml.label)
+      PermissiveXmlEqualityHelper.areEqual(xmlPathToJsonPath(matchingRules), xml, to, xml.label + "[0]")
+    }
+    def =<>=(to: Node): Boolean => BodyMatchingRules => Boolean = beSelectivelyPermissive => matchingRules =>
       StrictXmlEqualityHelper.areEqual(beSelectivelyPermissive, xmlPathToJsonPath(matchingRules), xml, to, xml.label)
   }
 
@@ -31,7 +33,7 @@ object ScalaPactXmlEquality {
 
 object StrictXmlEqualityHelper {
 
-  def areEqual(beSelectivelyPermissive: Boolean, matchingRules: BodyMatchingRules, expected: Elem, received: Elem, accumulatedXmlPath: String): Boolean =
+  def areEqual(beSelectivelyPermissive: Boolean, matchingRules: BodyMatchingRules, expected: Node, received: Node, accumulatedXmlPath: String): Boolean =
     expected.headOption.flatMap { e =>
       received.headOption.map { r =>
         compareNodes(beSelectivelyPermissive)(matchingRules)(e)(r)(accumulatedXmlPath)
@@ -79,7 +81,7 @@ object PermissiveXmlEqualityHelper {
     * fields or array elements are out of order, as long as they are present since json
     * doesn't not guarantee element order.
     */
-  def areEqual(matchingRules: BodyMatchingRules, expected: Elem, received: Elem, accumulatedXmlPath: String): Boolean =
+  def areEqual(matchingRules: BodyMatchingRules, expected: Node, received: Node, accumulatedXmlPath: String): Boolean =
     expected.headOption.flatMap { e =>
       received.headOption.map { r =>
         compareNodes(matchingRules)(e)(r)(accumulatedXmlPath)
@@ -91,10 +93,15 @@ object PermissiveXmlEqualityHelper {
 
   lazy val compareNodes: BodyMatchingRules => Node => Node => String => Boolean = matchingRules => expected => received => accumulatedXmlPath => {
 
+    println("==========")
+    println("testing " + accumulatedXmlPath + " expected " +expected)
+
     SharedXmlEqualityHelpers.matchNodeWithRules(matchingRules)(accumulatedXmlPath)(expected)(received) match {
       case RuleMatchSuccess => true
       case RuleMatchFailure => false
       case NoRuleMatchRequired =>
+
+        println("FFF")
 
         lazy val prefixEqual = expected.prefix == received.prefix
         lazy val labelEqual = expected.label == received.label
@@ -103,7 +110,63 @@ object PermissiveXmlEqualityHelper {
 
         lazy val childrenEqual =
           if(expected.child.isEmpty) expected.text == received.text
-          else expected.child.forall { eN => received.child.exists(rN => compareNodes(matchingRules)(eN)(rN)(accumulatedXmlPath + "." + eN.label)) }
+          else if (matchingRules.isEmpty) {
+            println("EMPY")
+            expected.child.forall { eN => received.child.exists(rN => compareNodes(matchingRules)(eN)(rN)(accumulatedXmlPath + "." + eN.label)) }
+          } else {
+
+            //           else expected.child.forall { eN => received.child.exists(rN => compareNodes(matchingRules)(eN)(rN)(accumulatedXmlPath + "." + eN.label)) }
+
+
+            val expectedSiblings: Map[String, Seq[Node]] = expected.child.groupBy(elem => elem.label)
+            val receivedSiblings: Map[String, Seq[Node]] = received.child.groupBy(elem => elem.label)
+
+            println("raw expected "+expected)
+            println("raw received "+received)
+            println("expectedSibs "+ expectedSiblings)
+            println("receivedSibs "+ receivedSiblings)
+
+            val siblings: Iterable[(Seq[Node], Option[Seq[Node]])] = expectedSiblings.map { sb =>
+              sb._1 -> (sb._2, receivedSiblings.get(sb._1))
+            }.values
+
+            println("siblings "+siblings)
+
+            siblings.forall { sibTup => sibTup._2 match {
+              case Some(receivedSib) => {
+
+                println("___" + siblings + " +++ " + receivedSib)
+
+                val indices = (0 to sibTup._1.size-1).toList
+                println("indices "+indices)
+
+                (sibTup._1,receivedSib,indices).zipped.toList.forall {
+                  eN =>
+                    println("FFF " + eN)
+//                    eN._2.child.exists {
+//                    rN =>
+                      compareNodes(matchingRules)(eN._1)(eN._2)(accumulatedXmlPath + "." + eN._1.label + "[" + eN._3 + "]")
+//                  }
+                }
+              }
+              case None => {
+                println("missing from "+sibTup)
+                false
+              }
+            }
+
+
+            }
+          }
+
+        println("prefixEqual " +prefixEqual)
+        println("labelEqual "+labelEqual)
+        println("attributesEqual "+attributesEqual)
+        println("childLengthOk "+childLengthOk)
+        println("was emp? "+expected.child.isEmpty)
+        println("ex '"+expected.text+"'")
+        println("rec '"+received.text+"'")
+        println("childrenEqual " +childrenEqual)
 
         prefixEqual && labelEqual && attributesEqual && childLengthOk && childrenEqual
     }
@@ -197,14 +260,23 @@ object SharedXmlEqualityHelpers {
     } else None
 
   val matchNodeWithRules: BodyMatchingRules => String => Node => Node => ArrayMatchingStatus = matchingRules => accumulatedXmlPath => ex => re => {
+
+    println(" possible rules "+matchingRules)
+    println(" accumulated xpath "+accumulatedXmlPath)
+    println(" received block "+re)
+
     val rules = matchingRules.map { mrs =>
       mrs.filter { mr =>
         val mrPath = mr._1.replace("$.body.", "").replace("$.body", "")
+
+        println("mrPath " + mrPath)
 
         // To account for paths that start at the root.
         mrPath.startsWith(accumulatedXmlPath) || mrPath.isEmpty || mrPath.startsWith("[")
       }
     }.getOrElse(Map.empty[String, MatchingRule])
+
+    println(" rules " + rules)
 
     val results =
       rules
@@ -254,6 +326,9 @@ object SharedXmlEqualityHelpers {
 
   val traverseAndMatch: String => MatchingRule => Node => Node => ArrayMatchingStatus = remainingRulePath => rule => ex => re => {
 
+    println("remaining '"+remainingRulePath+"'")
+    println("rule "+rule)
+
     remainingRulePath match {
       case rp: String if rp.startsWith(".@") =>
         // println(s"Found attribute path: '$rp'".yellow)
@@ -287,7 +362,8 @@ object SharedXmlEqualityHelpers {
             ArrayMatchingStatus.listArrayMatchStatusToSingle(res)
 
           case MatchingRule(Some(ruleType), Some(regex), _) if ruleType == "regex" =>
-            // println(s"Regex rule found.".yellow)
+            println(s"Regex rule found.".yellow)
+            println("text '"+re.text+"' against regex '"+regex+"'")
             regexCheck(regex)(re)
 
           case MatchingRule(Some(ruleType), None, _) =>
@@ -306,11 +382,18 @@ object SharedXmlEqualityHelpers {
       case rp: String if rp.matches("^.[a-zA-Z].*") =>
         // println(s"Found field rule path: '$rp'".yellow)
 
+        println("match " +rp)
+
         val maybeFieldName = """\w+""".r.findFirstIn(rp)
         val leftOverPath = """\.\w+""".r.replaceFirstIn(rp, "").replace(".#text", "")
         maybeFieldName.map { fieldName =>
 
+          println("field " + fieldName)
+          println("ex " + ex)
+          println("label " + ex.label)
+
           if(fieldName == ex.label && fieldName == re.label) {
+            println("leftover "+leftOverPath)
             if(leftOverPath.isEmpty) {
               rule match {
                 case MatchingRule(Some(ruleType), _, _) if ruleType == "type" =>
@@ -326,7 +409,7 @@ object SharedXmlEqualityHelpers {
                   RuleMatchFailure
 
                 case MatchingRule(_, _, Some(min)) =>
-                  // println(s"Invalid rule, tried to test array min of $min on a leaf node".yellow)
+                  println(s"Invalid rule, tried to test array min of $min on a leaf node".yellow)
                   RuleMatchFailure
 
                 case unexpectedRule =>
@@ -337,7 +420,7 @@ object SharedXmlEqualityHelpers {
             }
             else traverseAndMatch(leftOverPath)(rule)(ex)(re)
           }
-          else RuleMatchFailure
+          else NoRuleMatchRequired
 
         }.getOrElse {
           // println(s"Expected or Received XMl was missing a field node: $maybeFieldName".yellow)
@@ -345,7 +428,7 @@ object SharedXmlEqualityHelpers {
         }
 
       case rp: String if rp.matches("""^\[\d+\].*""") || rp.matches("""\.\d+""") =>
-        // println(s"Found array rule path: '$rp'".yellow)
+        println(s"Found array rule path: '$rp'".yellow)
 
         val index: Int = """\d+""".r.findFirstIn(rp).flatMap(Helpers.safeStringToInt).getOrElse(-1)
         val leftOverPath = """(\.?)(\[?)\d+(\]?)""".r.replaceFirstIn(remainingRulePath, "")
@@ -360,7 +443,7 @@ object SharedXmlEqualityHelpers {
         }
 
       case rp: String if rp.matches("""^\[\*\].*""") =>
-        // println(s"Found array wildcard rule path: '$rp'".yellow)
+        println(s"Found array wildcard rule path: '$rp'".yellow)
 
         val leftOverPath = """^\[\*\]""".r.replaceFirstIn(remainingRulePath, "")
 
@@ -376,7 +459,9 @@ object SharedXmlEqualityHelpers {
         }
 
       case rp: String if rp.matches("""^\.\*.*""") =>
-        // println(s"Found array wildcard rule path: '$rp'".yellow)
+        println(s"Found array wildcard rule path: '$rp'".yellow)
+
+
 
         val leftOverPath = """^\.\*""".r.replaceFirstIn(remainingRulePath, "")
 

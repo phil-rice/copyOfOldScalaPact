@@ -257,9 +257,9 @@ object BodyMatching extends GeneralMatcher {
   lazy val stringIsJson: String => Boolean = str => str.parseOption.isDefined
   lazy val stringIsXml: String => Boolean = str => safeStringToXml(str).isDefined
 
-  lazy val safeStringToXml: String => Option[Elem] = str =>
+  lazy val safeStringToXml: String => Option[Node] = str =>
     try {
-      Option(XML.loadString(str))
+      Option(scala.xml.Utility.trim(XML.loadString(str)))
     } catch {
       case _: Throwable => None
     }
