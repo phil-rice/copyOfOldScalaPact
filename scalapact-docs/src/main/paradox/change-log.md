@@ -16,6 +16,7 @@ With thanks to all contributors!
 
 ## 2.1.3 - TBC
 - BUGFIX: Bad test case fixed that would previously always succeed ([yasuba])
+- Changed ScalaPactPlugin to use AutoPlugin ([yasuba])
 
 ## 2.1.2 - 2017-01-25
 - BUGFIX: Small issue that slipped through testing: In order for providerStates to work you had to declare a providerStateMatcher somewhere even if you already have a normal providerState setting. This has been resolved.
