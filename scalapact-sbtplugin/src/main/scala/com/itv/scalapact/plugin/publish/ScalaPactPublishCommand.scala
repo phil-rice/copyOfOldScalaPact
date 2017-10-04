@@ -14,18 +14,18 @@ object ScalaPactPublishCommand {
   lazy val pactPublishCommandCamel: Command = Command.args("pactPublish", "<options>")(pactVerify)
 
   private lazy val pactVerify: (State, Seq[String]) => State = (state, args) => {
-    val pactTestedState = Command.process("pact-test", state)
+    val testedState = state.copy(remainingCommands = Exec("pact-test", None) +: state.remainingCommands)
 
     doPactPublish(
-      Project.extract(state).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args),
-      Project.extract(pactTestedState).get(ScalaPactPlugin.autoImport.pactBrokerAddress),
-      Project.extract(pactTestedState).get(ScalaPactPlugin.autoImport.providerBrokerPublishMap),
-      Project.extract(pactTestedState).get(Keys.version),
-      Project.extract(pactTestedState).get(ScalaPactPlugin.autoImport.pactContractVersion),
-      Project.extract(pactTestedState).get(ScalaPactPlugin.autoImport.allowSnapshotPublish)
+      Project.extract(testedState).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args),
+      Project.extract(testedState).get(ScalaPactPlugin.autoImport.pactBrokerAddress),
+      Project.extract(testedState).get(ScalaPactPlugin.autoImport.providerBrokerPublishMap),
+      Project.extract(testedState).get(Keys.version),
+      Project.extract(testedState).get(ScalaPactPlugin.autoImport.pactContractVersion),
+      Project.extract(testedState).get(ScalaPactPlugin.autoImport.allowSnapshotPublish)
     )
 
-    pactTestedState
+    testedState
   }
 
   def doPactPublish(scalaPactSettings: ScalaPactSettings, pactBrokerAddress: String, providerBrokerPublishMap: Map[String, String], projectVersion: String, pactContractVersion: String, allowSnapshotPublish: Boolean): Unit = {

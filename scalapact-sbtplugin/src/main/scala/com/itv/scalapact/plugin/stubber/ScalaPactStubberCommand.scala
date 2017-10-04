@@ -20,14 +20,15 @@ object ScalaPactStubberCommand {
     println("** ScalaPact: Running Stubber      **".white.bold)
     println("*************************************".white.bold)
 
-    val pactTestedState = Command.process("pact-test", state)
+//    val pactTestedState = Command.process("pact-test", state)
+    val testedState = state.copy(remainingCommands = Exec("pact-test", None) +: state.remainingCommands)
 
     runStubber(
-      Project.extract(state).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args),
+      Project.extract(testedState).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args),
       interactionManagerInstance
     )
 
-    pactTestedState
+    testedState
   }
 
   def interactionManagerInstance: InteractionManager = new InteractionManager

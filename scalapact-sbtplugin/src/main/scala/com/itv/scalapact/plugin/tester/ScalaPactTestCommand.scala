@@ -22,8 +22,10 @@ object ScalaPactTestCommand {
 
       println("> ScalaPact running: clean + test commands first")
 
-      val cleanState = Command.process("clean", state)
-      val testedState = Command.process("test", cleanState)
+//      val cleanState = Command.process("clean", state)
+//      val testedState = Command.process("test", cleanState)
+
+      val testedState = state.copy(remainingCommands = Exec("clean", None) +: Exec("test", None) +: state.remainingCommands)
 
       doPactPack(Project.extract(testedState).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args))
 
