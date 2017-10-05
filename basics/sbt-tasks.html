@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<title>Strict mode · Scala-Pact</title>
+<title>SBT Tasks · Scala-Pact</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content='scalapact-docs'/>
@@ -38,14 +38,14 @@
   <li><a href="../setup.html" class="page">Setup guide</a></li>
   <li><a href="../basics/index.html" class="page">Basic usage</a>
   <ul>
-    <li><a href="../basics/sbt-tasks.html" class="page">SBT Tasks</a></li>
+    <li><a href="../basics/sbt-tasks.html" class="active page">SBT Tasks</a></li>
     <li><a href="../basics/sbt-commands.html" class="page">SBT Commands</a></li>
     <li><a href="../basics/test-frameworks.html" class="page">Test frameworks</a></li>
   </ul></li>
   <li><a href="../advanced/index.html" class="page">Advanced usage</a>
   <ul>
     <li><a href="../advanced/provider-states.html" class="page">Provider states</a></li>
-    <li><a href="../advanced/strict-mode.html" class="active page">Strict mode</a></li>
+    <li><a href="../advanced/strict-mode.html" class="page">Strict mode</a></li>
     <li><a href="../advanced/matching-rules.html" class="page">Matching rules</a></li>
     <li><a href="../advanced/pact-broker.html" class="page">Pact Broker</a></li>
   </ul></li>
@@ -104,14 +104,14 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   <li><a href="../setup.html" class="page">Setup guide</a></li>
   <li><a href="../basics/index.html" class="page">Basic usage</a>
   <ul>
-    <li><a href="../basics/sbt-tasks.html" class="page">SBT Tasks</a></li>
+    <li><a href="../basics/sbt-tasks.html" class="active page">SBT Tasks</a></li>
     <li><a href="../basics/sbt-commands.html" class="page">SBT Commands</a></li>
     <li><a href="../basics/test-frameworks.html" class="page">Test frameworks</a></li>
   </ul></li>
   <li><a href="../advanced/index.html" class="page">Advanced usage</a>
   <ul>
     <li><a href="../advanced/provider-states.html" class="page">Provider states</a></li>
-    <li><a href="../advanced/strict-mode.html" class="active page">Strict mode</a></li>
+    <li><a href="../advanced/strict-mode.html" class="page">Strict mode</a></li>
     <li><a href="../advanced/matching-rules.html" class="page">Matching rules</a></li>
     <li><a href="../advanced/pact-broker.html" class="page">Pact Broker</a></li>
   </ul></li>
@@ -145,8 +145,8 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="nav-breadcrumbs">
 <ul>
   <li><a href="../index.html">Scala-Pact</a></li>
-  <li><a href="../advanced/index.html">Advanced usage</a></li>
-  <li>Strict mode</li>
+  <li><a href="../basics/index.html">Basic usage</a></li>
+  <li>SBT Tasks</li>
 </ul>
 </div>
 </div>
@@ -154,64 +154,28 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 
 <div class="page-content row">
 <div class="small-12 large-9 column" id="docs">
-<h1><a href="#strict-mode" name="strict-mode" class="anchor"><span class="anchor-link"></span></a>Strict mode</h1>
-<p>Scala-Pact was designed on a different set of choices than the original Pact implementations. The biggest but also least obvious of which is that Scala-Pact is subtly more forgiving by default in terms of how it matches.</p>
-<h4><a href="#formally-" name="formally-" class="anchor"><span class="anchor-link"></span></a>Formally:</h4>
-<p>Scala-Pact has two matching modes called strict and permissive. Strict mode follows the official Pact specification to the letter, and permissive follows a select sub-set of the specification that makes writing contract tests easier. Permissive is the default in Scala-Pact.</p>
-<p><strong>Important Note:</strong> When testing between Scala services that both use Scala-Pact, the default permissive mode is more convenient. However, <strong><em>when dealing with another Pact implementation you should ALWAYS use strict mode</em></strong> since that is what they are based on.</p>
-<h4><a href="#for-example" name="for-example" class="anchor"><span class="anchor-link"></span></a>For example&hellip;</h4>
-<p>Although the JSON specification states that arrays are ordered, you generally can&rsquo;t rely on that and your code should not be making that assumption. As such Scala-Pact considers the following a match:</p>
-<p><code>[&quot;red&quot;, &quot;blue&quot;] == [&quot;blue&quot;, &quot;red&quot;]</code></p>
-<p>Whereas the original Pact implementations consider that a mismatch and would need rules added for them to be acceptable.</p>
-<p>To take body matching as an example, Scala-Pact&rsquo;s matching process states that as long as the expected document exists within the actual document, they are a match. This is very powerful because it allows you to only describe the parts of the response object you care about (**without using body matching rules!**). For example these two nonsense JSON blobs are a match:</p>
-<p>Expected (the part of the contract we care about) data and structure:</p>
-<pre><code>{
-  &quot;id&quot;: &quot;abc123&quot;,
-  &quot;metadata&quot;: {
-    &quot;name&quot;: &quot;Bob&quot;
-  },
-  [
-    {
-      &quot;favouriteColour&quot;: &quot;red&quot;
-    }
-  ]
-}
-</code></pre>
-<p>Actual:</p>
-<pre><code>{
-  &quot;metadata&quot;: {
-    &quot;likesSports&quot;: true,
-    &quot;name&quot;: &quot;Bob&quot;,
-    &quot;employeeNumber&quot;: 15666884
-  },
-  &quot;id&quot;: &quot;abc123&quot;,
-  [
-    {
-      &quot;favouriteColour&quot;: &quot;green&quot;,
-      &quot;takesSugar&quot;: true
-    },
-    {
-      &quot;favouriteColour&quot;: &quot;red&quot;,
-      &quot;likesFishing&quot;: null
-    }
-  ]
-}
-</code></pre>
-<p>Notice that despite the extra data, the expected does fit perfectly inside the actual.</p>
-<p>On the other hand the original Pact matching process does not consider these a match. For anyone wishing to replicate that behaviour (and so we can call this library compliant!), a new strict mode has been introduced.</p>
-<p>Any of the usual commands will now take a <code>--strict true</code> or <code>--strict false</code> parameter that defaults to false.</p>
-<p>To use strict testing in the test frameworks you can use the <code>forgeStrictPact</code> initialiser in the consumer tests or do <code>.runStrictValidationTest(...)</code> in the verifier tests.</p>
-<p><strong>Please note</strong> that there is no such thing as a strict or non-strict Pact Contract file, the difference is entirely in the interpretation of the contract.</p>
-<h2><a href="#so-why-would-anyone-use-strict-mode-" name="so-why-would-anyone-use-strict-mode-" class="anchor"><span class="anchor-link"></span></a>So why would anyone use strict mode?</h2>
-<p>Two good reasons: 1. As previously mentioned, Scala-Pact is completely compatible with other Pact implementations but they only support what we call strict matching. When dealing with them, you should too so there are no misunderstandings! 2. You get better error messages on match failure. Since strict matching is less forgiving, Scala-Pact can do a better job of telling you where contracts were misaligned.</p>
-<h2><a href="#wait-then-why-would-anyone-use-permissive-matching-" name="wait-then-why-would-anyone-use-permissive-matching-" class="anchor"><span class="anchor-link"></span></a>Wait! Then why would anyone use permissive matching?!</h2>
-<p>Provided both the services are using Scala-Pact for their CDC testing, permissive matching is much easier to use and understand, you can almost get away with no matching rules.</p>
+<h1><a href="#sbt-tasks" name="sbt-tasks" class="anchor"><span class="anchor-link"></span></a>SBT Tasks</h1>
+<p>Scala-Pact tasks are composable pact operations that are light in execution. Tasks require more care than commands since they do not guarantee correctness on the grounds that they assume all previous build artefacts are up to date and accurate.</p>
+<h2><a href="#configuration" name="configuration" class="anchor"><span class="anchor-link"></span></a>Configuration</h2>
+<p>Commands pick up their configuration from the plugin&rsquo;s sbt settings only.</p>
+<h2><a href="#pactpack" name="pactpack" class="anchor"><span class="anchor-link"></span></a>pactPack</h2>
+<p>Behaves like <code>pactTest</code> but only performs the final step of squashing pact files together.</p>
+<p>See <a href="sbt-commands.html">SBT Commands</a> for more details.</p>
+<h2><a href="#pactstub" name="pactstub" class="anchor"><span class="anchor-link"></span></a>pactStub</h2>
+<p>Behaves like <code>pactStubber</code> but does not regenerate contract files, it simply runs based on whatever it finds in the pact directory.</p>
+<p>See <a href="sbt-commands.html">SBT Commands</a> for more details.</p>
+<h2><a href="#pactpush" name="pactpush" class="anchor"><span class="anchor-link"></span></a>pactPush</h2>
+<p>Behaves like <code>pactPublish</code> but does not regenerate contract files, it simply pushes / publishes whatever contract files it finds in the pact directory.</p>
+<p>See <a href="sbt-commands.html">SBT Commands</a> for more details.</p>
+<h2><a href="#pactcheck" name="pactcheck" class="anchor"><span class="anchor-link"></span></a>pactCheck</h2>
+<p>Behaves like <code>pactVerify</code>.</p>
+<p>See <a href="sbt-commands.html">SBT Commands</a> for more details.</p>
 <div class="source-github">
-The source code for this page can be found <a href="https://github.com/ITV/scala-pact/tree/master/scalapact-docs/src/main/paradox/advanced/strict-mode.md">here</a>.
+The source code for this page can be found <a href="https://github.com/ITV/scala-pact/tree/master/scalapact-docs/src/main/paradox/basics/sbt-tasks.md">here</a>.
 </div>
 
 <div class="nav-next">
-<p><strong>Next:</strong> <a href="../advanced/matching-rules.html">Matching rules</a></p>
+<p><strong>Next:</strong> <a href="../basics/sbt-commands.html">SBT Commands</a></p>
 </div>
 </div>
 <div class="large-3 show-for-large column" data-sticky-container>
@@ -220,12 +184,13 @@ The source code for this page can be found <a href="https://github.com/ITV/scala
 <div class="nav-title">On this page:</div>
 <div class="nav-toc">
 <ul>
-  <li><a href="../advanced/strict-mode.html#strict-mode" class="header">Strict mode</a>
+  <li><a href="../basics/sbt-tasks.html#sbt-tasks" class="header">SBT Tasks</a>
   <ul>
-    <li><a href="../advanced/strict-mode.html#formally-" class="header">Formally:</a></li>
-    <li><a href="../advanced/strict-mode.html#for-example" class="header">For example&hellip;</a></li>
-    <li><a href="../advanced/strict-mode.html#so-why-would-anyone-use-strict-mode-" class="header">So why would anyone use strict mode?</a></li>
-    <li><a href="../advanced/strict-mode.html#wait-then-why-would-anyone-use-permissive-matching-" class="header">Wait! Then why would anyone use permissive matching?!</a></li>
+    <li><a href="../basics/sbt-tasks.html#configuration" class="header">Configuration</a></li>
+    <li><a href="../basics/sbt-tasks.html#pactpack" class="header">pactPack</a></li>
+    <li><a href="../basics/sbt-tasks.html#pactstub" class="header">pactStub</a></li>
+    <li><a href="../basics/sbt-tasks.html#pactpush" class="header">pactPush</a></li>
+    <li><a href="../basics/sbt-tasks.html#pactcheck" class="header">pactCheck</a></li>
   </ul></li>
 </ul>
 </div>
