@@ -169,13 +169,45 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   <li><a href="https://github.com/phil-rice">phil-rice</a></li>
   <li>&hellip;your name here? :-)</li>
 </ul>
-<p>Work has been carried out by <a href="https://github.com/davesmith00000">davesmith00000</a> unless otherwise specified.</p>
-<h2><a href="#2-2-0-2017-10-04" name="2-2-0-2017-10-04" class="anchor"><span class="anchor-link"></span></a>2.2.0 - 2017-10-04</h2>
+<p>Maintained by <a href="https://github.com/davesmith00000">davesmith00000</a>.</p>
+<h2><a href="#2-2-0-2017-10-05" name="2-2-0-2017-10-05" class="anchor"><span class="anchor-link"></span></a>2.2.0 - 2017-10-05</h2>
 <p><strong>Breaking changes.</strong></p>
 <p>With thanks to <a href="https://github.com/yasuba">yasuba</a> and <a href="https://github.com/itsDanOades">itsDanOades</a> for assisting with this release.</p>
-<p>Highlights: - Accepts basic auth for Pact Broker addresses (<a href="https://github.com/phil-rice">phil-rice</a>) - Output dir (target/pacts) is now configurable via SBT config and environment variable &ldquo;pact.rootDir&rdquo; (<a href="https://github.com/fergusstrange">fergusstrange</a>) - Publish to multiple provider pact brokers - <strong>[BREAKING]</strong> Matching logic completely rewritten (this could break existing tests in one or two cases, but once fixed they will be correct by the Pact Specification) - <strong>[BREAKING]</strong> No more dependency conflicts  - No external lib dependancies in any of the core libraries.  - You must tell Scala-Pact which Http and JSON libraries to use (see setup guide).  - JSON support via either Argonaut 6.1, Argonaut 6.2, or Circe 0.8.0  - HTTP support via Http4s versions 0.15.0a, 0.16.2, 0.16.2a, or 0.17.0  - Example projects use a range of Scala and lib combinations to prove they work (to be expanded) - <strong>[BREAKING]</strong> Renamed sbt plugin to sbt-scalapact - Composable SBT Tasks (pactPack, packPush, pactStub, and pactCheck) - Scala-Pact env config (e.g. port and local dir) is now defined in the build sbt file.  - Commands inherit and can override via the usual command line arguments.</p>
-<p>Bug fixes: - Scala-Pact can now be used reliably inside SBT to avoid constantly starting SBT from cold. - Issues with matching rules and how they deal with deep or multiple layers of wildcards have been resolved. - Regex matching of values no longer expects an exact match, instead expects to find at least one match.</p>
-<p>Other improvements for contributors: - Converted to multi-project build - Many more modules, improved separation of concerns  - Extending support for alternate HTTP and JSON frameworks is now easy. - Better build / test scripts include testing cross compilation - Simpler project version management - Release script improvements</p>
+<p>Highlights:</p>
+<ul>
+  <li>Accepts basic auth for Pact Broker addresses (<a href="https://github.com/phil-rice">phil-rice</a>)</li>
+  <li>Output dir (target/pacts) is now configurable via SBT config and environment variable &ldquo;pact.rootDir&rdquo; (<a href="https://github.com/fergusstrange">fergusstrange</a>)</li>
+  <li>Publish to multiple provider pact brokers</li>
+  <li><strong>[BREAKING]</strong> Matching logic completely rewritten (this could break existing tests in one or two cases, but once fixed they will be correct by the Pact Specification)</li>
+  <li><strong>[BREAKING]</strong> No more dependency conflicts
+    <ul>
+      <li>No external lib dependancies in any of the core libraries.</li>
+      <li>You must tell Scala-Pact which Http and JSON libraries to use (see setup guide).</li>
+      <li>JSON support via either Argonaut 6.1, Argonaut 6.2, or Circe 0.8.0</li>
+      <li>HTTP support via Http4s versions 0.15.0a, 0.16.2, 0.16.2a, or 0.17.0</li>
+      <li>Example projects use a range of Scala and lib combinations to prove they work (to be expanded)</li>
+    </ul>
+  </li>
+  <li><strong>[BREAKING]</strong> Renamed sbt plugin to sbt-scalapact</li>
+  <li>Composable SBT Tasks (pactPack, packPush, pactStub, and pactCheck)</li>
+  <li>Scala-Pact env config (e.g. port and local dir) is now defined in the build sbt file.</li>
+  <li>Commands inherit and can override via the usual command line arguments.</li>
+</ul>
+<p>Bug fixes:</p>
+<ul>
+  <li>Scala-Pact can now be used reliably inside SBT to avoid constantly starting SBT from cold.</li>
+  <li>Issues with matching rules and how they deal with deep or multiple layers of wildcards have been resolved.</li>
+  <li>Regex matching of values no longer expects an exact match, instead expects to find at least one match.</li>
+</ul>
+<p>Other improvements for contributors:</p>
+<ul>
+  <li>Converted to multi-project build</li>
+  <li>Many more modules, improved separation of concerns</li>
+  <li>Extending support for alternate HTTP and JSON frameworks is now easy.</li>
+  <li>Better build / test scripts include testing cross compilation</li>
+  <li>Simpler project version management</li>
+  <li>Release script improvements</li>
+</ul>
 <h2><a href="#2-1-3-2017-03-24" name="2-1-3-2017-03-24" class="anchor"><span class="anchor-link"></span></a>2.1.3 - 2017-03-24</h2>
 <ul>
   <li>Convert SBT plugin to AutoPlugin (<a href="https://github.com/yasuba">yasuba</a>)</li>
@@ -252,7 +284,7 @@ The source code for this page can be found <a href="https://github.com/ITV/scala
 <ul>
   <li><a href="change-log.html#change-log" class="header">Change log</a>
   <ul>
-    <li><a href="change-log.html#2-2-0-2017-10-04" class="header">2.2.0 - 2017-10-04</a></li>
+    <li><a href="change-log.html#2-2-0-2017-10-05" class="header">2.2.0 - 2017-10-05</a></li>
     <li><a href="change-log.html#2-1-3-2017-03-24" class="header">2.1.3 - 2017-03-24</a></li>
     <li><a href="change-log.html#2-1-2-2017-01-25" class="header">2.1.2 - 2017-01-25</a></li>
     <li><a href="change-log.html#2-1-1-2017-01-24" class="header">2.1.1 - 2017-01-24</a></li>
