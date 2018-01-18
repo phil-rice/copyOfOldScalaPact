@@ -30,7 +30,7 @@
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.2.2*
+2.2.3*
 </div>
 </div>
 <div class="nav-toc">
@@ -96,7 +96,7 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <span class="home-icon">⌂</span>Scala-Pact
 </a>
 <div class="version-number">
-2.2.2*
+2.2.3*
 </div>
 </div>
 <div class="nav-toc">
@@ -155,23 +155,25 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <div class="small-12 large-9 column" id="docs">
 <h1><a href="#dependencies" name="dependencies" class="anchor"><span class="anchor-link"></span></a>Dependencies</h1>
 <p>The Pact integration test library itself depends on other of Scala libraries to make it work. Specifically it needs an Http and a JSON library.</p>
-<h2><a href="#scala-pact-2-2-0-" name="scala-pact-2-2-0-" class="anchor"><span class="anchor-link"></span></a>Scala-Pact 2.2.0 +</h2>
+<h2><a href="#scala-pact-2-2-x" name="scala-pact-2-2-x" class="anchor"><span class="anchor-link"></span></a>Scala-Pact 2.2.x</h2>
 <p>Versions of Scala-Pact have their dependencies baked in. The benefit was that it made development of the library initially easy, but as more people tried to adopt it, reports came in that it was causing massive dependency conflicts for fairly obvious reasons.</p>
 <p>To tackle this, Scala-Pact now supports a range of libraries and versions. We can add more, and <a href="contributing.html">pull-requests are welcome</a>.</p>
-<p>As far as the user is concerned there are two things to be aware of: 1. Which combination of libaries all work with Scala-Pact and your project; 2. That you need to explicitly add them to your project (see set up guides).</p>
+<p>As far as the user is concerned there are two things to be aware of: 1. Which combination of libraries all work with Scala-Pact and your project; 2. That you need to explicitly add them to your project (see set up guides).</p>
 <h3><a href="#compatibility-matrix" name="compatibility-matrix" class="anchor"><span class="anchor-link"></span></a>Compatibility Matrix</h3>
 <p>Please note that this is for SBT 13.x. Once the upgrade to SBT 1.x (with Scala 2.12.3 compatible plugins) is complete this table will change. For instance, Circe is not very useful at the moment, but will be soon!</p>
-<pre><code>                  |   Plugin  |             Framework
+<pre><code>                    |   Plugin  |             Framework
 -------------------------------------------------------------------
-                  |  (2.10.6) |  (2.10.6) | (2.11.11) |  (2.12.3)
+                    |  (2.10.6) |  (2.10.6) | (2.11.11) |  (2.12.3)
 -------------------------------------------------------------------
-Http4s    0.15.0a |    YES    |    YES    |    YES    |    YES
-Http4s    0.16.2  |    YES    |    YES    |    YES    |    YES
-Http4s    0.16.2a |    YES    |    YES    |    YES    |    YES
-Http4s    0.17.0  |    NO     |    NO     |    YES    |    YES
-Argonaut  6.1     |    YES    |    YES    |    YES    |    NO
-Argonaut  6.2     |    YES    |    YES    |    YES    |    YES
-Circe     0.8     |    NO     |    NO     |    YES    |    YES
+Http4s    0.15.16a  |    YES    |    YES    |    YES    |    YES
+Http4s    0.16.6    |    YES    |    YES    |    YES    |    YES
+Http4s    0.16.6a   |    YES    |    YES    |    YES    |    YES
+Http4s    0.17.6    |    NO     |    NO     |    YES    |    YES
+Http4s    0.18.0-M8 |    NO     |    NO     |    YES    |    YES
+Argonaut  6.1       |    YES    |    YES    |    YES    |    NO
+Argonaut  6.2       |    YES    |    YES    |    YES    |    YES
+Circe     0.8       |    NO     |    NO     |    YES    |    YES
+Circe     0.9       |    NO     |    NO     |    YES    |    YES
 </code></pre>
 <p>At the moment it is best to avoid Http4s 0.17.0+, Circe 0.8+ and Argonaut 6.1 if possible.</p>
 <h2><a href="#prior-to-version-2-2-0" name="prior-to-version-2-2-0" class="anchor"><span class="anchor-link"></span></a>Prior to version 2.2.0</h2>
@@ -199,7 +201,7 @@ The source code for this page can be found <a href="https://github.com/ITV/scala
 <ul>
   <li><a href="project-deps.html#dependencies" class="header">Dependencies</a>
   <ul>
-    <li><a href="project-deps.html#scala-pact-2-2-0-" class="header">Scala-Pact 2.2.0 +</a></li>
+    <li><a href="project-deps.html#scala-pact-2-2-x" class="header">Scala-Pact 2.2.x</a></li>
     <li><a href="project-deps.html#prior-to-version-2-2-0" class="header">Prior to version 2.2.0</a></li>
   </ul></li>
 </ul>
@@ -243,7 +245,7 @@ The source code for this page can be found <a href="https://github.com/ITV/scala
 
 <!--
 <div class="copyright">
-<span class="text">&copy; 2017</span>
+<span class="text">&copy; 2018</span>
 <a href="https://www.example.com" class="logo">logo</a>
 </div>
 -->
