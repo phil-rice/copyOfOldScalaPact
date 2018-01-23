@@ -11,24 +11,24 @@ import com.itv.scalapactcore.common.PactReaderWriter._
 
 object ScalaPactTestCommand {
 
-  lazy val pactTestCommandHyphen: Command = Command.args("pact-test", "<options>")(pactTest)
-  lazy val pactTestCommandCamel: Command = Command.args("pactTest", "<options>")(pactTest)
-
-  private lazy val pactTest: (State, Seq[String]) => State = (state, args) => {
-
-      println("*************************************".white.bold)
-      println("** ScalaPact: Running tests        **".white.bold)
-      println("*************************************".white.bold)
-
-      println("> ScalaPact running: clean + test commands first")
-
-      val cleanState = Command.process("clean", state)
-      val testedState = Command.process("test", cleanState)
-
-      doPactPack(Project.extract(testedState).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args))
-
-      testedState
-    }
+//  lazy val pactTestCommandHyphen: Command = Command.args("pact-test", "<options>")(pactTest)
+//  lazy val pactTestCommandCamel: Command = Command.args("pactTest", "<options>")(pactTest)
+//
+//  private lazy val pactTest: (State, Seq[String]) => State = (state, args) => {
+//
+//      println("*************************************".white.bold)
+//      println("** ScalaPact: Running tests        **".white.bold)
+//      println("*************************************".white.bold)
+//
+//      println("> ScalaPact running: clean + test commands first")
+//
+//      val cleanState = Command.process("clean", state)
+//      val testedState = Command.process("test", cleanState)
+//
+//      doPactPack(Project.extract(testedState).get(ScalaPactPlugin.autoImport.scalaPactEnv).toSettings + ScalaPactSettings.parseArguments(args))
+//
+//      testedState
+//    }
 
   def doPactPack(scalaPactSettings: ScalaPactSettings): Unit = {
     println("*************************************".white.bold)
